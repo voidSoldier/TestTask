@@ -1,6 +1,6 @@
-package to;
+package com.javajunior.testtask.to;
 
-import model.Security;
+import com.javajunior.testtask.model.Security;
 
 import java.time.LocalDateTime;
 

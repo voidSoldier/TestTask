@@ -1,13 +1,31 @@
-package model;
+package com.javajunior.testtask.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
+@Entity
+@Table(name = "securities")
+//uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")}
 public class Security {
 
+    @Id
     private int id;
+
+    @Column(name = "secid", nullable = false, unique = true)
+    @NotBlank
     private String secid;
+
+    @Column(name = "name", nullable = false, unique = true)
+    @NotBlank
     private String name;
+
+    @Column(name = "emitent_title", nullable = false)
+    @NotBlank
     private String eminentTitle;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("tradeDate DESC")
     private List<History> histories;
 
     public Security() {
@@ -25,10 +43,11 @@ public class Security {
         histories.add(h);
 
 
-    } public void addHistory(List<History> h) {
-        histories.addAll(h);
     }
 
+    public void addHistory(List<History> h) {
+        histories.addAll(h);
+    }
 
 
     public int getId() {

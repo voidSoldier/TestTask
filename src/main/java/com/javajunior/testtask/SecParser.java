@@ -1,12 +1,15 @@
-import model.History;
-import model.Security;
+package com.javajunior.testtask;
+
+import com.javajunior.testtask.service.HistoryService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import service.SecurityService;
 
+import com.javajunior.testtask.service.SecurityService;
+import com.javajunior.testtask.model.Security;
+import com.javajunior.testtask.model.History;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,9 +18,11 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class SecParser {
 
     private SecurityService service;
+    private HistoryService historyService;
 
     private List<Security> securityList;
     private List<History> historyList;
@@ -43,6 +48,7 @@ public class SecParser {
 
         matchHistoryToSecurity();
         service.addSecurity(securityList);
+        historyService.addHistory(historyList);
     }
 
     private void parseSecurity(Document doc) {
@@ -91,6 +97,7 @@ public class SecParser {
             String secid = sec.getSecid().toLowerCase();
             for (History hist : historyList) {
                 if (secid.equals(hist.getSecid().toLowerCase())) {
+                    hist.setSecurity(sec);
                     sec.addHistory(hist);
                 }
             }

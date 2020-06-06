@@ -1,0 +1,53 @@
+package com.javajunior.testtask.service;
+
+import com.javajunior.testtask.EntityNotFoundException;
+import com.javajunior.testtask.model.History;
+import com.javajunior.testtask.model.Security;
+import com.javajunior.testtask.repository.HistoryRepository;
+import com.javajunior.testtask.repository.SecurityRepository;
+import org.springframework.stereotype.Service;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+@Service
+public class HistoryService {
+
+    private HistoryRepository repository;
+    private SecurityRepository securityRepository;
+
+    public HistoryService(HistoryRepository repository, SecurityRepository securityRepository) {
+        this.repository = repository;
+        this.securityRepository = securityRepository;
+    }
+
+    public void addHistory(List<History> hist) {
+        repository.saveAll(hist);
+    }
+
+    public void addHistory(History hist) {
+        Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
+        hist.setSecurity(sec);;
+        repository.save(hist);
+    }
+
+
+    public int deleteHistory(int id) {
+        return repository.deleteById(id);
+//       repository.deleteById(id);
+    }
+
+    public List<History> getAll(){
+        return repository.findAll();
+    }
+
+
+    public History getHistory(int id) throws FileNotFoundException {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void updateHistory(History updated) {
+        repository.save(updated);
+    }
+
+}
