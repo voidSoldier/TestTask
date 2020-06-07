@@ -1,12 +1,16 @@
 package com.javajunior.testtask.service;
 
 import com.javajunior.testtask.EntityNotFoundException;
+import com.javajunior.testtask.SecParser;
 import com.javajunior.testtask.model.History;
 import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.repository.SecurityRepository;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,17 +22,16 @@ public class SecurityService {
         this.repository = repository;
     }
 
-    public void addSecurity(List<Security> sec) {
-        repository.saveAll(sec);
+
+
+    public void add(Security security) {
+        repository.save(security);
     }
 
-    public void addSecurity(Security sec) {
-        repository.save(sec);
-    }
-
-    public int deleteSecurity(int id) {
-       return repository.deleteById(id);
-//       repository.deleteById(id);
+    public boolean delete(int id) {
+        int result = repository.deleteById(id);
+        if (result != 0) return true;
+        else throw new EntityNotFoundException();
     }
 
     public List<Security> getAll(){
@@ -36,15 +39,12 @@ public class SecurityService {
     }
 
 
-    public Security getSecurity(int id) throws FileNotFoundException {
+    public Security get(int id) throws EntityNotFoundException {
         return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public void updateSecurity(Security updated) {
+    public void update(Security updated) {
         repository.save(updated);
     }
 
-//    public void addHistory(int id, History history) {
-//      repository.addHistory(id, history);;
-//    }
 }

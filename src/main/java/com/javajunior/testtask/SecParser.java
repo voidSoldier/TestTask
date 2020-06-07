@@ -1,54 +1,60 @@
 package com.javajunior.testtask;
 
-import com.javajunior.testtask.service.HistoryService;
+import com.javajunior.testtask.model.History;
+import com.javajunior.testtask.model.Security;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.javajunior.testtask.service.SecurityService;
-import com.javajunior.testtask.model.Security;
-import com.javajunior.testtask.model.History;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class SecParser {
 
-    private SecurityService service;
-    private HistoryService historyService;
 
     private List<Security> securityList;
     private List<History> historyList;
+    private Map<List<Security>, List<History>> result;
 
-    public SecParser(SecurityService service) {
-        this.service = service;
+    public SecParser() {
+        securityList = new ArrayList<>();
+        historyList = new ArrayList<>();
+        result = new HashMap<>();
     }
 
-    public void parse(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public Map<List<Security>, List<History>> parse(List<String> fileNames) throws ParserConfigurationException, IOException, SAXException {
 
         DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document doc = dBuilder.parse(new File(fileName));
+        Document doc;
+
+        for (String fileName : fileNames) {
+            doc = dBuilder.parse(new File(fileName));
+            //optional, but recommended
+            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            doc.getDocumentElement().normalize();
 
 
-        //optional, but recommended
-        //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-        doc.getDocumentElement().normalize();
+            Element dataType = doc.getElementById("data");
+            if (dataType.getAttribute("id").equals("security")) {
+                parseSecurity(doc);
+            } else parseHistory(doc);
+        }
 
-        Element dataType = doc.getElementById("data");
-        if (dataType.getAttribute("id").equals("security")) {
-            parseSecurity(doc);
-        } else parseHistory(doc);
 
         matchHistoryToSecurity();
-        service.addSecurity(securityList);
-        historyService.addHistory(historyList);
+        result.put(securityList, historyList);
+        return result;
     }
 
     private void parseSecurity(Document doc) {

@@ -21,20 +21,17 @@ public class HistoryService {
         this.securityRepository = securityRepository;
     }
 
-    public void addHistory(List<History> hist) {
-        repository.saveAll(hist);
-    }
-
-    public void addHistory(History hist) {
+    public void add(History hist) {
         Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
         hist.setSecurity(sec);;
         repository.save(hist);
     }
 
 
-    public int deleteHistory(int id) {
-        return repository.deleteById(id);
-//       repository.deleteById(id);
+    public boolean delete(int id) {
+        int result = repository.deleteById(id);
+        if (result != 0) return true;
+        else throw new EntityNotFoundException();
     }
 
     public List<History> getAll(){
@@ -42,11 +39,11 @@ public class HistoryService {
     }
 
 
-    public History getHistory(int id) throws FileNotFoundException {
+    public History get(int id) throws EntityNotFoundException {
         return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public void updateHistory(History updated) {
+    public void update(History updated) {
         repository.save(updated);
     }
 
