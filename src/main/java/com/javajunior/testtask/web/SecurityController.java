@@ -1,5 +1,6 @@
 package com.javajunior.testtask.web;
 
+import com.javajunior.testtask.Util;
 import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,10 @@ public class SecurityController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void add(@RequestBody Security security) {
+        Util.Validator.checkName(security);
         service.add(security);
     }
 
-
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void addFromFile(@RequestBody List<String> fileNames) {
-//        service.addDataFromFiles(fileNames);
-//    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -54,4 +51,17 @@ public class SecurityController {
     public void update(@RequestBody Security updated) {
         service.update(updated);
     }
+
+
+
+//    private void checkName(Security security) {
+//        char[] legalSigns = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя 0123456789".toCharArray();
+//        char[] name = security.getName().toLowerCase().toCharArray();
+//
+//        for (char c: name) {
+//            for (char legal : legalSigns) {
+//                if (c != legal) throw new Util.IllegalSecurityNameException();
+//            }
+//        }
+//    }
 }

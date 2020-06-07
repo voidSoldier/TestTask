@@ -1,16 +1,10 @@
 package com.javajunior.testtask.service;
 
-import com.javajunior.testtask.EntityNotFoundException;
-import com.javajunior.testtask.SecParser;
-import com.javajunior.testtask.model.History;
+import com.javajunior.testtask.Util;
 import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.repository.SecurityRepository;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -31,7 +25,7 @@ public class SecurityService {
     public boolean delete(int id) {
         int result = repository.deleteById(id);
         if (result != 0) return true;
-        else throw new EntityNotFoundException();
+        else throw new Util.EntityNotFoundException();
     }
 
     public List<Security> getAll(){
@@ -39,8 +33,8 @@ public class SecurityService {
     }
 
 
-    public Security get(int id) throws EntityNotFoundException {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Security get(int id) throws Util.EntityNotFoundException {
+        return repository.findById(id).orElseThrow(Util.EntityNotFoundException::new);
     }
 
     public void update(Security updated) {
