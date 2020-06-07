@@ -1,6 +1,11 @@
 package com.javajunior.testtask;
 
+import com.javajunior.testtask.model.History;
 import com.javajunior.testtask.model.Security;
+import com.javajunior.testtask.to.SecurityTo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
     private Util() {
@@ -32,4 +37,26 @@ public class Util {
             }
         }
     }
+
+
+    public static class Converter {
+        public static List<SecurityTo> convertTo(List<Security> list) {
+            List<SecurityTo> result = new ArrayList<>();
+
+            for (Security sec : list) {
+                SecurityTo secTo = new SecurityTo(sec);
+                for (History hist : sec.getHistories()) {
+                    secTo.setTradeDate(hist.getTradeDate());
+                    secTo.setNumTrades(hist.getNumTrades());
+                    secTo.setOpen(hist.getOpen());
+                    secTo.setClose(hist.getClose());
+
+                    result.add(secTo);
+                }
+            }
+
+            return result;
+        }
+    }
 }
+

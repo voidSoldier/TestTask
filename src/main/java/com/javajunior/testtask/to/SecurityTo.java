@@ -9,7 +9,7 @@ public class SecurityTo {
     private int id;
     private String secid;
     private String name;
-    private String eminentTitle;
+    private String emitentTitle;
 
 
     // OR in a list of History?
@@ -20,26 +20,32 @@ public class SecurityTo {
 
 
     public SecurityTo(Security sec) {
-        this(sec.getId(), sec.getSecid(), sec.getName(), sec.getEminentTitle());
+//        int id = sec.getId();
+//        String secid = sec.getSecid();
+//        String name = sec.getName();
+//        String emitentTitle =  sec.getEmitentTitle();
+
+
+        this(sec.getId(), sec.getSecid(), sec.getName(), sec.getEmitentTitle());
     }
 
-    public SecurityTo(int id, String secid, String name, String eminentTitle) {
+    private SecurityTo(int id, String secid, String name, String emitentTitle) {
         this.id = id;
         this.secid = secid;
         this.name = name;
-        this.eminentTitle = eminentTitle;
+        this.emitentTitle = emitentTitle;
     }
 
-    public SecurityTo(int id, String secid, String name, String eminentTitle, LocalDateTime tradeDate, double numTrades, double open, double close) {
-        this.id = id;
-        this.secid = secid;
-        this.name = name;
-        this.eminentTitle = eminentTitle;
-        this.tradeDate = tradeDate;
-        this.numTrades = numTrades;
-        this.open = open;
-        this.close = close;
-    }
+//    public SecurityTo(int id, String secid, String name, String emitentTitle, LocalDateTime tradeDate, double numTrades, double open, double close) {
+//        this.id = id;
+//        this.secid = secid;
+//        this.name = name;
+//        this.emitentTitle = emitentTitle;
+//        this.tradeDate = tradeDate;
+//        this.numTrades = numTrades;
+//        this.open = open;
+//        this.close = close;
+//    }
 
     public int getId() {
         return id;
@@ -65,12 +71,12 @@ public class SecurityTo {
         this.name = name;
     }
 
-    public String getEminentTitle() {
-        return eminentTitle;
+    public String getEmitentTitle() {
+        return emitentTitle;
     }
 
-    public void setEminentTitle(String eminentTitle) {
-        this.eminentTitle = eminentTitle;
+    public void setEmitentTitle(String eminentTitle) {
+        this.emitentTitle = eminentTitle;
     }
 
     public LocalDateTime getTradeDate() {

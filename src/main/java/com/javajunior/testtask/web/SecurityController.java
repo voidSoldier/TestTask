@@ -3,6 +3,7 @@ package com.javajunior.testtask.web;
 import com.javajunior.testtask.Util;
 import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.service.SecurityService;
+import com.javajunior.testtask.to.SecurityTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,7 +36,7 @@ public class SecurityController {
 
 
     @GetMapping
-    public List<Security> getAll() {
+    public List<SecurityTo> getAll() {
         return service.getAll();
     }
 
@@ -52,16 +53,4 @@ public class SecurityController {
         service.update(updated);
     }
 
-
-
-//    private void checkName(Security security) {
-//        char[] legalSigns = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя 0123456789".toCharArray();
-//        char[] name = security.getName().toLowerCase().toCharArray();
-//
-//        for (char c: name) {
-//            for (char legal : legalSigns) {
-//                if (c != legal) throw new Util.IllegalSecurityNameException();
-//            }
-//        }
-//    }
 }

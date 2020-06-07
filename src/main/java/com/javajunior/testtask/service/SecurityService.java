@@ -3,6 +3,7 @@ package com.javajunior.testtask.service;
 import com.javajunior.testtask.Util;
 import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.repository.SecurityRepository;
+import com.javajunior.testtask.to.SecurityTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public class SecurityService {
     }
 
 
-
     public void add(Security security) {
         repository.save(security);
     }
@@ -28,8 +28,8 @@ public class SecurityService {
         else throw new Util.EntityNotFoundException();
     }
 
-    public List<Security> getAll(){
-        return repository.findAll();
+    public List<SecurityTo> getAll() {
+        return Util.Converter.convertTo(repository.findAll());
     }
 
 
