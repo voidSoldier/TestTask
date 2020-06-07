@@ -22,20 +22,20 @@ public class Security {
 
     @Column(name = "emitent_title", nullable = false)
     @NotBlank
-    private String eminentTitle;
+    private String emitentTitle;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("tradeDate DESC")
     private List<History> histories;
 
     public Security() {
     }
 
-    public Security(int id, String secid, String name, String eminentTitle) {
+    public Security(int id, String secid, String name, String emitentTitle) {
         this.id = id;
         this.secid = secid;
         this.name = name;
-        this.eminentTitle = eminentTitle;
+        this.emitentTitle = emitentTitle;
     }
 
 
@@ -74,12 +74,12 @@ public class Security {
         this.name = name;
     }
 
-    public String getEminentTitle() {
-        return eminentTitle;
+    public String getEmitentTitle() {
+        return emitentTitle;
     }
 
-    public void setEminentTitle(String eminentTitle) {
-        this.eminentTitle = eminentTitle;
+    public void setEmitentTitle(String emitentTitle) {
+        this.emitentTitle = emitentTitle;
     }
 
     public List<History> getHistories() {

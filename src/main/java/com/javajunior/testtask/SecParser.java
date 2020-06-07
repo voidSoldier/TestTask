@@ -68,7 +68,7 @@ public class SecParser {
                 newSec.setId(Integer.parseInt(e.getAttribute("id")));
                 newSec.setSecid(e.getAttribute("secid"));
                 newSec.setName(e.getAttribute("name"));
-                newSec.setEminentTitle(e.getAttribute("eminent_title"));
+                newSec.setEmitentTitle(e.getAttribute("emitent_title"));
             }
         }
 
