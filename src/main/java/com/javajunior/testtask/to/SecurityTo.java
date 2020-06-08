@@ -11,8 +11,6 @@ public class SecurityTo {
     private String name;
     private String emitentTitle;
 
-
-    // OR in a list of History?
     private LocalDateTime tradeDate;
     private double numTrades;
     private double open;
@@ -20,12 +18,6 @@ public class SecurityTo {
 
 
     public SecurityTo(Security sec) {
-//        int id = sec.getId();
-//        String secid = sec.getSecid();
-//        String name = sec.getName();
-//        String emitentTitle =  sec.getEmitentTitle();
-
-
         this(sec.getId(), sec.getSecid(), sec.getName(), sec.getEmitentTitle());
     }
 

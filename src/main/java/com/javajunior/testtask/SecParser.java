@@ -63,16 +63,56 @@ public class SecParser {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
+//
                 Element e = (Element) node;
-                newSec.setId(Integer.parseInt(e.getAttribute("id")));
-                newSec.setSecid(e.getAttribute("secid"));
-                newSec.setName(e.getAttribute("name"));
-                newSec.setEmitentTitle(e.getAttribute("emitent_title"));
+//                newSec.setId(Integer.parseInt(e.getAttribute("id")));
+//                newSec.setSecid(e.getAttribute("secid"));
+//                newSec.setShortName(e.getAttribute("short_name"));
+//                newSec.setRegNumber(e.getAttribute("reg_number"));
+//                newSec.setName(e.getAttribute("name"));
+//                newSec.setIsin(e.getAttribute("isin"));
+//                newSec.setIsTraded(Integer.parseInt(e.getAttribute("is_traded")));
+//                newSec.setEmitentId(Integer.parseInt(e.getAttribute("emitent_id")));
+//                newSec.setEmitentTitle(e.getAttribute("emitent_title"));
+//                newSec.setEmitentInn(e.getAttribute("emitent_inn"));
+//                newSec.setEmitentOkpo(e.getAttribute("emitent_okpo"));
+//                newSec.setGosReg(e.getAttribute("gos_reg"));
+//                newSec.setType(e.getAttribute("type"));
+//                newSec.setGroup(e.getAttribute("group"));
+//                newSec.setPrimaryBoardId(e.getAttribute("primary_board_id"));
+//                newSec.setMarketPriceBoardId(e.getAttribute("market_price_board_id"));
+
+                newSec.setId(getInt(e, "id"));
+                newSec.setSecid(getStr(e, "secid"));
+                newSec.setShortName(getStr(e, "shortname"));
+                newSec.setRegNumber(getStr(e, "regnumber"));
+                newSec.setName(getStr(e, "name"));
+                newSec.setIsin(getStr(e, "isin"));
+                newSec.setIsTraded(getInt(e, "is_traded"));
+                newSec.setEmitentId(getInt(e, "emitent_id"));
+                newSec.setEmitentTitle(getStr(e, "emitent_title"));
+                newSec.setEmitentInn(getStr(e, "emitent_inn"));
+                newSec.setEmitentOkpo(getStr(e, "emitent_okpo"));
+                newSec.setGosReg(getStr(e, "gosreg"));
+                newSec.setType(getStr(e, "type"));
+                newSec.setGroup(getStr(e, "group"));
+                newSec.setPrimaryBoardId(getStr(e, "primary_boardid"));
+                newSec.setMarketPriceBoardId(getStr(e, "marketprice_boardid"));
+
             }
         }
 
         securityList.add(newSec);
+    }
+
+    private String getStr(Element e, String attr) {
+        return e.getAttribute(attr);
+    }
+    private int getInt(Element e, String attr) {
+        return Integer.parseInt(e.getAttribute(attr));
+    }
+    private double getDouble(Element e, String attr) {
+        return Double.parseDouble(e.getAttribute(attr));
     }
 
 
@@ -86,11 +126,32 @@ public class SecParser {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element e = (Element) node;
-                newHist.setTradeDate(LocalDateTime.parse(e.getAttribute("TRADEDATE")));
-                newHist.setSecid((e.getAttribute("SECID")));
-                newHist.setNumTrades(Double.parseDouble(e.getAttribute("NUMTRADES")));
-                newHist.setOpen(Double.parseDouble(e.getAttribute("OPEN")));
-                newHist.setClose(Double.parseDouble(e.getAttribute("CLOSE")));
+//                newHist.setTradeDate(LocalDateTime.parse(e.getAttribute("TRADEDATE")));
+//                newHist.setSecid((e.getAttribute("SECID")));
+//                newHist.setNumTrades(Double.parseDouble(e.getAttribute("NUMTRADES")));
+//                newHist.setOpen(Double.parseDouble(e.getAttribute("OPEN")));
+//                newHist.setClose(Double.parseDouble(e.getAttribute("CLOSE")));
+
+                newHist.setBoardId(getStr(e, "BOARDID"));
+                newHist.setTradeDate(LocalDateTime.parse(getStr(e, "TRADEDATE")));
+                newHist.setShortName(getStr(e, "SHORTNAME"));
+                newHist.setSecid(getStr(e, "SECID"));
+                newHist.setNumTrades(getDouble(e, "NUMTRADES"));
+                newHist.setValue(getDouble(e, "VALUE"));
+                newHist.setOpen(getDouble(e, "OPEN"));
+                newHist.setLow(getDouble(e, "LOW"));
+                newHist.setHigh(getDouble(e, "HIGH"));
+                newHist.setLegalClosePrice(getDouble(e, "LEGALCLOSEPRICE"));
+                newHist.setWaPrice(getDouble(e, "WAPRICE"));
+                newHist.setClose(getDouble(e, "CLOSE"));
+                newHist.setVolume(getDouble(e, "VOLUME"));
+                newHist.setMarketPrice2(getDouble(e, "MARKETPRICE2"));
+                newHist.setMarketPrice3(getDouble(e, "MARKETPRICE3"));
+                newHist.setAdmittedQuote(getDouble(e, "ADMITTEDQUOTE"));
+                newHist.setMp2ValTrd(getDouble(e, "MP2VALTRD"));
+                newHist.setMarketPrice3TradesValue(getDouble(e, "MARKETPRICE3TRADESVALUE"));
+                newHist.setAdmittedValue(getDouble(e, "ADMITTEDVALUE"));
+                newHist.setWaVal(getDouble(e, "WAVAL"));
             }
         }
 
