@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = FileDataController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileDataController {
 
-    static final String REST_URL = "/rest/load";
+    static final String REST_URL = "/load";
 
     @Autowired
     private FileDataService service;

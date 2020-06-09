@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = HistoryController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class HistoryController {
 
-    static final String REST_URL = "/rest/histories";
+    static final String REST_URL = "/histories";
 
     @Autowired
     private HistoryService service;

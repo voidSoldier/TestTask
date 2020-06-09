@@ -8,6 +8,7 @@ public class SecurityTo {
 
     private int id;
     private String secid;
+    private String regNumber;
     private String name;
     private String emitentTitle;
 
@@ -18,12 +19,13 @@ public class SecurityTo {
 
 
     public SecurityTo(Security sec) {
-        this(sec.getId(), sec.getSecid(), sec.getName(), sec.getEmitentTitle());
+        this(sec.getId(), sec.getSecid(), sec.getRegNumber(), sec.getName(), sec.getEmitentTitle());
     }
 
-    private SecurityTo(int id, String secid, String name, String emitentTitle) {
-        this.id = id;
+
+    private SecurityTo(int id, String secid, String regNumber, String name, String emitentTitle) {
         this.secid = secid;
+        this.regNumber = regNumber;
         this.name = name;
         this.emitentTitle = emitentTitle;
     }
@@ -38,6 +40,7 @@ public class SecurityTo {
 //        this.open = open;
 //        this.close = close;
 //    }
+
 
     public int getId() {
         return id;
@@ -55,6 +58,14 @@ public class SecurityTo {
         this.secid = secid;
     }
 
+    public String getRegNumber() {
+        return regNumber;
+    }
+
+    public void setRegNumber(String regNumber) {
+        this.regNumber = regNumber;
+    }
+
     public String getName() {
         return name;
     }
@@ -67,8 +78,8 @@ public class SecurityTo {
         return emitentTitle;
     }
 
-    public void setEmitentTitle(String eminentTitle) {
-        this.emitentTitle = eminentTitle;
+    public void setEmitentTitle(String emitentTitle) {
+        this.emitentTitle = emitentTitle;
     }
 
     public LocalDateTime getTradeDate() {

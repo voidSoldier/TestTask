@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = SecurityController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class SecurityController {
 
-    static final String REST_URL = "/rest/securities";
+    static final String REST_URL = "/securities";
 
     @Autowired
     private SecurityService service;
@@ -35,7 +35,7 @@ public class SecurityController {
     }
 
 
-    @GetMapping
+    @GetMapping("/all")
     public List<SecurityTo> getAll() {
         return service.getAll();
     }
@@ -50,6 +50,7 @@ public class SecurityController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Security updated) {
+        Util.Validator.checkName(updated);
         service.update(updated);
     }
 

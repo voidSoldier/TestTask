@@ -45,6 +45,9 @@ public class Util {
 
             for (Security sec : list) {
                 SecurityTo secTo = new SecurityTo(sec);
+
+                if (sec.getHistories().isEmpty()) continue;
+
                 for (History hist : sec.getHistories()) {
                     secTo.setTradeDate(hist.getTradeDate());
                     secTo.setNumTrades(hist.getNumTrades());
