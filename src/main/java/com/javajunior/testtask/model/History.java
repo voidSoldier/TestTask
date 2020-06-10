@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -23,26 +24,22 @@ public class History {
     private String boardId;
 
     @Column(name = "trade_date", nullable = false)
-    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime tradeDate;
+    private LocalDate tradeDate;
 
     @Column(name = "short_name")
     private String shortName;
 
     @Column(name = "secid")
-    @NotBlank
     private String secid;
 
     @Column(name = "num_trades")
-    @NotNull
     private double numTrades;
 
     @Column(name = "value")
     private double value;
 
     @Column(name = "open")
-    @NotNull
     private double open;
 
     @Column(name = "low")
@@ -58,7 +55,6 @@ public class History {
     private double waPrice;
 
     @Column(name = "close")
-    @NotNull
     private double close;
 
     @Column(name = "volume")
@@ -156,11 +152,11 @@ public class History {
         this.boardId = boardId;
     }
 
-    public LocalDateTime getTradeDate() {
+    public LocalDate getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(LocalDateTime tradeDate) {
+    public void setTradeDate(LocalDate tradeDate) {
         this.tradeDate = tradeDate;
     }
 

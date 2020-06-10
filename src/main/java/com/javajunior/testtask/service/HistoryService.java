@@ -22,7 +22,7 @@ public class HistoryService {
 
     public void add(History hist) {
         Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
-        hist.setSecurity(sec);;
+        hist.setSecurity(sec);
         repository.save(hist);
     }
 

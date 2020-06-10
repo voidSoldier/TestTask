@@ -11,7 +11,7 @@ import java.util.List;
 public class Security {
 
     @Id
-    @NotEmpty
+//    @Column(columnDefinition = "INTEGER")
     private int id;
 
     @Column(name = "secid", nullable = false, unique = true)
@@ -25,7 +25,6 @@ public class Security {
     private String regNumber;
 
     @Column(name = "name", nullable = false, unique = true)
-    @NotBlank
     private String name;
 
     @Column(name = "isin", nullable = false)
@@ -38,7 +37,6 @@ public class Security {
     private int emitentId;
 
     @Column(name = "emitent_title", nullable = false)
-    @NotBlank
     private String emitentTitle;
 
     @Column(name = "emitent_inn", nullable = false)
@@ -53,7 +51,7 @@ public class Security {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "group", nullable = false)
+    @Column(name = "sec_group", nullable = false)
     private String group;
 
     @Column(name = "primary_board_id", nullable = false)
@@ -99,6 +97,9 @@ public class Security {
     }
 
     public void addHistory(History h) {
+        if (histories == null) {
+            histories = new ArrayList<>();
+        }
         histories.add(h);
     }
 
@@ -234,8 +235,8 @@ public class Security {
         return histories == null ? new ArrayList<>() : histories;
     }
 
-    public void setHistories(List<History> histories) {
-        if (histories != null) this.histories.addAll(histories);
-        this.histories = histories;
+    public void setHistories(List<History> hist) {
+        if (histories != null) histories.addAll(hist);
+        hist = histories;
     }
 }

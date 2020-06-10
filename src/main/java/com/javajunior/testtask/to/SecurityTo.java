@@ -2,6 +2,7 @@ package com.javajunior.testtask.to;
 
 import com.javajunior.testtask.model.Security;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SecurityTo {
@@ -12,7 +13,7 @@ public class SecurityTo {
     private String name;
     private String emitentTitle;
 
-    private LocalDateTime tradeDate;
+    private LocalDate tradeDate;
     private double numTrades;
     private double open;
     private double close;
@@ -82,11 +83,11 @@ public class SecurityTo {
         this.emitentTitle = emitentTitle;
     }
 
-    public LocalDateTime getTradeDate() {
+    public LocalDate getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(LocalDateTime tradeDate) {
+    public void setTradeDate(LocalDate tradeDate) {
         this.tradeDate = tradeDate;
     }
 

@@ -2,6 +2,9 @@ package com.javajunior.testtask;
 
 import com.javajunior.testtask.model.History;
 import com.javajunior.testtask.model.Security;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,16 +14,17 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SecParser {
 
+public class SecParser {
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private List<Security> securityList;
     private List<History> historyList;
@@ -32,55 +36,67 @@ public class SecParser {
         result = new HashMap<>();
     }
 
-    public Map<List<Security>, List<History>> parse(List<String> fileNames) throws ParserConfigurationException, IOException, SAXException {
+    public Map<List<Security>, List<History>> parse(InputStream is) throws ParserConfigurationException, IOException, SAXException {
+//public Map<List<Security>, List<History>> parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document doc = dBuilder.parse(is);
+//        Element dataType = doc.getElementById("data");
 
+//        if (doc == null || !doc.hasChildNodes()) throw new NullPointerException("doc is null or has no child nodes");
+
+        NodeList nodes = doc.getElementsByTagName("data");
+        Element e = (Element) nodes.item(0);
+        if (("securities").equals(e.getAttribute("id"))) {
+            parseSecurity(doc);
+        } else parseHistory(doc);
+        result.put(securityList, historyList);
+        return result;
+    }
+
+    public void parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
+        log.info("in the parse method");
         DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document doc;
 
-        for (String fileName : fileNames) {
-            doc = dBuilder.parse(new File(fileName));
+        for (MultipartFile f : files) {
+            doc = dBuilder.parse(f.getInputStream());
             //optional, but recommended
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
 
-            Element dataType = doc.getElementById("data");
-            if (dataType.getAttribute("id").equals("security")) {
+            NodeList nodes = doc.getElementsByTagName("data");
+            Element e = (Element) nodes.item(0);
+            if (("securities").equals(e.getAttribute("id"))) {
                 parseSecurity(doc);
             } else parseHistory(doc);
+
         }
 
+//        matchHistoryToSecurity();
+//        result.put(securityList, historyList);
+//        return result;
+    }
 
-        matchHistoryToSecurity();
-        result.put(securityList, historyList);
-        return result;
+    public List<Security> getSecurityList(){
+        return securityList;
+    }
+
+    public List<History> getHistoryList(){
+        return historyList;
     }
 
     private void parseSecurity(Document doc) {
-        Security newSec = new Security();
+        log.info("in the parse SECURITY method");
+
         NodeList nodes = doc.getElementsByTagName("row");
+
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-//
+                Security newSec = new Security();
                 Element e = (Element) node;
-//                newSec.setId(Integer.parseInt(e.getAttribute("id")));
-//                newSec.setSecid(e.getAttribute("secid"));
-//                newSec.setShortName(e.getAttribute("short_name"));
-//                newSec.setRegNumber(e.getAttribute("reg_number"));
-//                newSec.setName(e.getAttribute("name"));
-//                newSec.setIsin(e.getAttribute("isin"));
-//                newSec.setIsTraded(Integer.parseInt(e.getAttribute("is_traded")));
-//                newSec.setEmitentId(Integer.parseInt(e.getAttribute("emitent_id")));
-//                newSec.setEmitentTitle(e.getAttribute("emitent_title"));
-//                newSec.setEmitentInn(e.getAttribute("emitent_inn"));
-//                newSec.setEmitentOkpo(e.getAttribute("emitent_okpo"));
-//                newSec.setGosReg(e.getAttribute("gos_reg"));
-//                newSec.setType(e.getAttribute("type"));
-//                newSec.setGroup(e.getAttribute("group"));
-//                newSec.setPrimaryBoardId(e.getAttribute("primary_board_id"));
-//                newSec.setMarketPriceBoardId(e.getAttribute("market_price_board_id"));
 
                 newSec.setId(getInt(e, "id"));
                 newSec.setSecid(getStr(e, "secid"));
@@ -99,41 +115,47 @@ public class SecParser {
                 newSec.setPrimaryBoardId(getStr(e, "primary_boardid"));
                 newSec.setMarketPriceBoardId(getStr(e, "marketprice_boardid"));
 
+                securityList.add(newSec);
             }
         }
 
-        securityList.add(newSec);
+
     }
 
     private String getStr(Element e, String attr) {
         return e.getAttribute(attr);
     }
+
     private int getInt(Element e, String attr) {
-        return Integer.parseInt(e.getAttribute(attr));
+        String attrStr = e.getAttribute(attr);
+        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Integer.parseInt(attrStr);
     }
+
     private double getDouble(Element e, String attr) {
-        return Double.parseDouble(e.getAttribute(attr));
+        String attrStr = e.getAttribute(attr);
+        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Double.parseDouble(attrStr);
+    }
+
+    private LocalDate getDate(Element e) {
+        String date = e.getAttribute("TRADEDATE");
+        return date.isBlank() || date.isEmpty() ? null : LocalDate.parse(date);
     }
 
 
     private void parseHistory(Document doc) {
-        History newHist = new History();
+        log.info("in the parse HISTORY method");
+
 
         NodeList nodes = doc.getElementsByTagName("row");
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
+                History newHist = new History();
                 Element e = (Element) node;
-//                newHist.setTradeDate(LocalDateTime.parse(e.getAttribute("TRADEDATE")));
-//                newHist.setSecid((e.getAttribute("SECID")));
-//                newHist.setNumTrades(Double.parseDouble(e.getAttribute("NUMTRADES")));
-//                newHist.setOpen(Double.parseDouble(e.getAttribute("OPEN")));
-//                newHist.setClose(Double.parseDouble(e.getAttribute("CLOSE")));
 
                 newHist.setBoardId(getStr(e, "BOARDID"));
-                newHist.setTradeDate(LocalDateTime.parse(getStr(e, "TRADEDATE")));
+                newHist.setTradeDate(getDate(e));
                 newHist.setShortName(getStr(e, "SHORTNAME"));
                 newHist.setSecid(getStr(e, "SECID"));
                 newHist.setNumTrades(getDouble(e, "NUMTRADES"));
@@ -152,21 +174,40 @@ public class SecParser {
                 newHist.setMarketPrice3TradesValue(getDouble(e, "MARKETPRICE3TRADESVALUE"));
                 newHist.setAdmittedValue(getDouble(e, "ADMITTEDVALUE"));
                 newHist.setWaVal(getDouble(e, "WAVAL"));
+                historyList.add(newHist);
             }
         }
 
-        historyList.add(newHist);
+
     }
 
-    private void matchHistoryToSecurity() {
-        for (Security sec : securityList) {
-            String secid = sec.getSecid().toLowerCase();
+    public Map<List<Security>, List<History>> matchHistoryToSecurity() {
+        log.info("in the --matchHistoryToSecurity-- method");
+        List<History> copy = new ArrayList<>();
+
+        if (!securityList.isEmpty() || !historyList.isEmpty()) {
             for (History hist : historyList) {
-                if (secid.equals(hist.getSecid().toLowerCase())) {
-                    hist.setSecurity(sec);
-                    sec.addHistory(hist);
+                String secid = hist.getSecid().toLowerCase();
+                for (Security sec : securityList) {
+                    if (secid.equals(sec.getSecid().toLowerCase())) {
+
+                        hist.setSecurity(sec);
+                    }
                 }
+                if (hist.getSecurity() == null) copy.add(hist);
             }
         }
+        historyList.removeAll(copy);
+//        for (Security sec : securityList) {
+//            String secid = sec.getSecid().toLowerCase();
+//            for (History hist : historyList) {
+//                if (secid.equals(hist.getSecid().toLowerCase())) {
+//                    hist.setSecurity(sec);
+//                    sec.addHistory(hist);
+//                }
+//            }
+//        }
+        result.put(securityList, historyList);
+        return result;
     }
 }
