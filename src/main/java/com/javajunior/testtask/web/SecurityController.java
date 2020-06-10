@@ -25,7 +25,7 @@ public class SecurityController {
     private SecurityService service;
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "application/json;charset=UTF-8")
+    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public void add( Security security) {
         log.info("adding new security: {}", security.getName());
         Util.Validator.checkName(security);
