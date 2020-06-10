@@ -5,8 +5,12 @@ import com.javajunior.testtask.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -19,9 +23,16 @@ public class HistoryController {
     @Autowired
     private HistoryService service;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void add(@RequestBody History history) {
-        service.add(history);
+    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<History> add(History history) {
+        History created = service.add(history);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
+        return ResponseEntity.created(uriOfNewResource).body(created);
+
     }
 
     @DeleteMapping("/{id}")

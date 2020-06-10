@@ -26,7 +26,7 @@ public class SecurityController {
 
 
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public void add( Security security) {
+    public void add(Security security) {
         log.info("adding new security: {}", security.getName());
         Util.Validator.checkName(security);
         service.add(security);

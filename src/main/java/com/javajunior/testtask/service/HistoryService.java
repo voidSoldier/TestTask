@@ -20,10 +20,10 @@ public class HistoryService {
         this.securityRepository = securityRepository;
     }
 
-    public void add(History hist) {
+    public History add(History hist) {
         Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
         hist.setSecurity(sec);
-        repository.save(hist);
+        return repository.save(hist);
     }
 
 
