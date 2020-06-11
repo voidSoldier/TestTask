@@ -60,7 +60,7 @@ public class Security {
     @Column(name = "marketprice_board_id", nullable = false)
     private String marketPriceBoardId;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("tradeDate DESC")
     private List<History> histories;
 

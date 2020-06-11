@@ -26,20 +26,7 @@ public class Util {
 
 
     public static class Validator {
-//        public static void checkName(Security security) {
-//            char[] legalSigns = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя 0123456789".toCharArray();
-//            char[] name = security.getName().toLowerCase().toCharArray();
-//
-//            for (char c : name) {
-//                for (char legal : legalSigns) {
-//                    if (c != legal) throw new Util.IllegalSecurityNameException();
-//                }
-//            }
-//        }
-
-
         public static void checkName(Security security) {
-//            char[] legalSigns = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя 0123456789".toCharArray();
             char[] name = security.getName().toLowerCase().toCharArray();
 
             for (char c : name) {

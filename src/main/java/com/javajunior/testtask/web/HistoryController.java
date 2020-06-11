@@ -1,7 +1,10 @@
 package com.javajunior.testtask.web;
 
 import com.javajunior.testtask.model.History;
+import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.service.HistoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +22,7 @@ import java.util.List;
 public class HistoryController {
 
     static final String REST_URL = "/histories";
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private HistoryService service;
@@ -41,9 +45,16 @@ public class HistoryController {
         service.delete(id);
     }
 
+
+
     @GetMapping
-    public List<History> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<History>> getAll() {
+        log.info("getting all history");
+        try {
+            return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")

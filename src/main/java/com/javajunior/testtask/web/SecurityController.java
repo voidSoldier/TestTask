@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -42,16 +45,37 @@ public class SecurityController {
 
 
     @GetMapping
-    public List<SecurityTo> getAll() {
+    public ResponseEntity<List<SecurityTo>> getAll() {
         log.info("getting all securities");
-        return service.getAll();
+        try {
+            return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+//        return service.getAll();
     }
 
+    @GetMapping("/full")
+    public ResponseEntity<List<Security>> getAllFull() {
+        log.info("getting all securities");
+        try {
+            return new ResponseEntity<>(service.getAllFull(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/{id}")
     public Security get(@PathVariable int id) {
         log.info("getting security with id {}", id);
         return service.get(id);
+    }
+
+    @GetMapping(value = "/filter")
+    public List<SecurityTo> filter(@RequestParam @Nullable LocalDate tradeDate, @RequestParam @Nullable String emitentTitle) {
+        log.info("filtering securities");
+        return service.filter(tradeDate, emitentTitle);
     }
 
 
