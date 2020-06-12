@@ -1,7 +1,6 @@
 package com.javajunior.testtask.web;
 
 import com.javajunior.testtask.model.History;
-import com.javajunior.testtask.model.Security;
 import com.javajunior.testtask.service.HistoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 
@@ -28,16 +24,24 @@ public class HistoryController {
     private HistoryService service;
 
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<History> add(History history) {
-        History created = service.add(history);
+    @ResponseStatus(value = HttpStatus.OK)
+    public void saveOrUpdate(History history) {
+        log.info("_____new security: {}", history.getSecid());
 
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
-
+        service.saveOrUpdate(history);
     }
+
+//    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+//    public ResponseEntity<History> add(History history) {
+//        History created = service.add(history);
+//
+//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                .path(REST_URL + "/{id}")
+//                .buildAndExpand(created.getId()).toUri();
+//
+//        return ResponseEntity.created(uriOfNewResource).body(created);
+//
+//    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

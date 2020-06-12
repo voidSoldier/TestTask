@@ -12,10 +12,14 @@
 
     <script type='text/javascript'>
         $(document).ready(function () {
+            getAll();
+        });
+
+        function getAll() {
             $('#securityToList').DataTable({
                 pageLength: 16,
                 ajax: {
-                    url: '/testtask/securities',
+                    url: '/testtask/securities/with-history',
                     dataSrc: ''
                 },
                 columns: [
@@ -53,8 +57,13 @@
                     }
                 ]
             });
-            // updateTable: updateFilteredTable
-        });
+        }
+
+        function destroyTable() {
+            var table = $('#securityToList').DataTable();
+            table.destroy();
+            getAll();
+        }
     </script>
     <title>Title</title>
 </head>
@@ -65,7 +74,7 @@
     <h2>Securities</h2>
     <br><br>
     <div>
-    <form id="filter">
+        <form id="filter">
             <div>
                 <div>
                     <label for="emitentTitle">Emitent Title</label>
@@ -76,7 +85,7 @@
                     <input name="tradeDate" id="tradeDate">
                 </div>
             </div>
-    </form>
+        </form>
     </div>
     <div>
         <button onclick="clearFilter()">Clear filter</button>
@@ -88,6 +97,7 @@
     <table id="securityToList" class="display" style="width:100%">
 
     </table>
+    <button onclick="destroyTable()">Update table</button>
     <%--    <table border="1" cellpadding="8" cellspacing="0">--%>
     <%--        <thead>--%>
     <%--        <tr>--%>

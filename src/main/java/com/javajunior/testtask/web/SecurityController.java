@@ -28,39 +28,44 @@ public class SecurityController {
     private SecurityService service;
 
 
+//    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+//    public void add(Security security) {
+//        log.info("adding new security: {}", security.getName());
+//        Util.Validator.checkName(security);
+//        service.add(security);
+//    }
+
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public void add(Security security) {
-        log.info("adding new security: {}", security.getName());
+    @ResponseStatus(value = HttpStatus.OK)
+    public void saveOrUpdate(Security security) {
+        log.info("_____new security: {}", security.getName());
         Util.Validator.checkName(security);
-        service.add(security);
+        service.saveOrUpdate(security);
     }
 
-
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("deleting security with id {}", id);
         service.delete(id);
     }
 
 
-    @GetMapping
-    public ResponseEntity<List<SecurityTo>> getAll() {
+    @GetMapping("/with-history")
+    public ResponseEntity<List<SecurityTo>> getAllWithHistory() {
         log.info("getting all securities");
         try {
-            return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+            return new ResponseEntity<>(service.getAllWithHistory(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-//        return service.getAll();
     }
 
-    @GetMapping("/full")
-    public ResponseEntity<List<Security>> getAllFull() {
+    @GetMapping()
+    public ResponseEntity<List<Security>> getAll() {
         log.info("getting all securities");
         try {
-            return new ResponseEntity<>(service.getAllFull(), HttpStatus.OK);
+            return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -79,12 +84,12 @@ public class SecurityController {
     }
 
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Security updated) {
-        log.info("updating security {}", updated.getName());
-        Util.Validator.checkName(updated);
-        service.update(updated);
-    }
+//    @PutMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+//    public void update(@RequestBody Security updated) {
+//        log.info("updating security {}", updated);
+//        Util.Validator.checkName(updated);
+//        service.update(updated);
+//    }
 
 }

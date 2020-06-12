@@ -27,14 +27,13 @@ public class Util {
 
     public static class Validator {
         public static void checkName(Security security) {
-            char[] name = security.getName().toLowerCase().toCharArray();
+            char[] name = security.getName().toCharArray();
+            boolean isValid = true;
 
             for (char c : name) {
-                if (Character.UnicodeBlock.of(c) != Character.UnicodeBlock.CYRILLIC ||
-                        Character.isDigit(c) ||
-                        Character.isSpaceChar(c)) {
-                    throw new Util.IllegalSecurityNameException();
-                }
+                if (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC ||
+                        Character.isDigit(c) | Character.isWhitespace(c)) {
+                } else throw new Util.IllegalSecurityNameException();
             }
         }
     }

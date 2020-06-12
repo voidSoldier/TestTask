@@ -19,7 +19,9 @@ public interface SecurityRepository extends JpaRepository<Security, Integer> {
 
     @Transactional
     @Modifying
-    int deleteById(int id);
+    @Query("DELETE FROM Security s WHERE s.id=:id")
+    int delete(@Param("id") int id);
+
 
     @Query
     Security findSecurityBySecid(String secid);

@@ -5,113 +5,19 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
-    <script type='text/javascript'>
-        $(document).ready(function () {
-            $('#securityList').DataTable({
-                pageLength: 16,
-                ajax: {
-                    url: '/testtask/securities/full',
-                    dataSrc: ''
-                },
-                columns: [
-                    {
-                        title: 'Secid',
-                        data: 'secid'
-                    },
-                    {
-                        title: 'ShortName',
-                        data: 'shortName'
-                    },
-                    {
-                        title: 'RegNumber',
-                        data: 'regNumber'
-                    },
-                    {
-                        title: 'Name',
-                        data: 'name'
-                    },
-                    {
-                        title: 'Isin',
-                        data: 'isin'
-                    },
-                    {
-                        title: 'IsTraded',
-                        data: 'isTraded'
-                    },
-                    {
-                        title: 'EmitentId',
-                        data: 'emitentId'
-                    },
-                    {
-                        title: 'EmitentTitle',
-                        data: 'emitentTitle'
-                    },
-                    {
-                        title: 'EmitentInn',
-                        data: 'emitentInn'
-                    },
-                    {
-                        title: 'EmitentOkpo',
-                        data: 'emitentOkpo'
-                    },
-                    {
-                        title: 'GosReg',
-                        data: 'gosReg'
-                    },
-                    {
-                        title: 'Type',
-                        data: 'type'
-                    },
-                    {
-                        title: 'Group',
-                        data: 'group'
-                    },
-                    {
-                        title: 'PrimaryBoardId',
-                        data: 'primaryBoardId'
-                    },
-                    {
-                        title: 'MarketPriceBoardId',
-                        data: 'marketPriceBoardId'
-                    },
-                    {
-                        "render": renderDeleteBtn,
-                        "defaultContent": "",
-                        "orderable": false
-                    },
-                    {
-                        "sTitle": "Edit",
-                        "mData": "id",
-                        "render": function (mData, type, row, meta) {
-                            return '<button onClick="getDetails(' + mData + ')">Edit</button>'
-                        },
-                        "defaultContent": "",
-                        "orderable": false
-                    },
-                    {
-                        "sTitle": "Delete",
-                        "mData": "id",
-                        "render": function (mData, type, row, meta) {
-                            return '<button onClick="getDetails(' + mData + ')">Delete</button>'
-                        },
-                        "defaultContent": "",
-                        "orderable": false
-                    }
-                ]
-            });
-            // updateTable: updateFilteredTable
-        });
-    </script>
 
     <title>Title</title>
 </head>
 <body>
+<script type="text/javascript" src="resources/js/security.js" defer></script>
 <h2>Manage security records</h2>
 <table id="securityList" class="display" style="width:100%"></table>
 <br><br><br><br><br>
 <jsp:useBean id="sec" class="com.javajunior.testtask.model.Security" scope="request"/>
 <h3>Add or update security record</h3>
 <form id="saveSec" method="post" action="${pageContext.request.contextPath}/securities">
+    <label for="id">secid</label><br>
+    <input type="number" value="${sec.id}" id="id" name="id" required><br><br>
     <label for="secid">secid</label><br>
     <input type="text" value="${sec.secid}" id="secid" name="secid" required><br><br>
     <label for="shortName">shortName</label><br>
@@ -142,133 +48,192 @@
     <input type="text" value="${sec.primaryBoardId}" id='primaryBoardId' name="primaryBoardId" required><br><br>
     <label for="marketPriceBoardId">marketPriceBoardId</label><br>
     <input type="text" value="${sec.marketPriceBoardId}" id='marketPriceBoardId' name="marketPriceBoardId" required><br><br>
-    <button type="submit">Save</button>
     <button onclick="saveSecurity()">Save</button>
     <button onclick="reset()">Reset</button>
 </form>
 
-<script>
-    var isNew = true;
+<%--<script type='text/javascript'>--%>
+<%--    var isNew = true;--%>
 
-    function saveSecurity() {
-        if ($("#saveSec").valid()) {
-            var url, data, method;
+<%--    $(document).ready(function () {--%>
+<%--        getAll();--%>
+<%--    });--%>
 
-            if (isNew) {
-                url = '/testtask/securities';
-                data = $("#saveSec").serialize();
-                method = 'POST';
-            }
+<%--    function getAll() {--%>
+<%--        $('#securityList').dataTable({--%>
+<%--            pageLength: 16,--%>
+<%--            ajax: {--%>
+<%--                url: '/testtask/securities/',--%>
+<%--                dataSrc: ''--%>
+<%--            },--%>
+<%--            columns: [--%>
+<%--                {--%>
+<%--                    title: 'Id',--%>
+<%--                    data: 'id'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'Secid',--%>
+<%--                    data: 'secid'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'ShortName',--%>
+<%--                    data: 'shortName'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'RegNumber',--%>
+<%--                    data: 'regNumber'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'Name',--%>
+<%--                    data: 'name'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'Isin',--%>
+<%--                    data: 'isin'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'IsTraded',--%>
+<%--                    data: 'isTraded'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'EmitentId',--%>
+<%--                    data: 'emitentId'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'EmitentTitle',--%>
+<%--                    data: 'emitentTitle'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'EmitentInn',--%>
+<%--                    data: 'emitentInn'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'EmitentOkpo',--%>
+<%--                    data: 'emitentOkpo'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'GosReg',--%>
+<%--                    data: 'gosReg'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'Type',--%>
+<%--                    data: 'type'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'Group',--%>
+<%--                    data: 'group'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'PrimaryBoardId',--%>
+<%--                    data: 'primaryBoardId'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    title: 'MarketPriceBoardId',--%>
+<%--                    data: 'marketPriceBoardId'--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    "sTitle": "Edit",--%>
+<%--                    // "mData": "id",--%>
+<%--                    "render": function (data, type, row) {--%>
+<%--                        return '<button onClick="updateSec(' + row.id + ')">Edit</button>'--%>
+<%--                    },--%>
+<%--                    "defaultContent": "",--%>
+<%--                    "orderable": false--%>
+<%--                },--%>
+<%--                {--%>
+<%--                    "sTitle": "Delete",--%>
+<%--                    "mData": "id",--%>
+<%--                    "render": function (mData, type, row, meta) {--%>
+<%--                        return '<button onClick="deleteSec(' + mData + ')">Delete</button>'--%>
+<%--                    },--%>
+<%--                    "defaultContent": "",--%>
+<%--                    "orderable": false--%>
+<%--                }--%>
+<%--            ]--%>
+<%--        });--%>
+<%--    }--%>
 
-            $.ajax({
-                type: method,
-                url: url,
-                dataType: 'JSON',
-                data: data,
+<%--    function saveSecurity() {--%>
+<%--        var data = $("#saveSec").serialize();--%>
 
-                success: function (data) {
-                    if (isNew) {
-                        getAll();
-                        alert("Security record added");
-                    }
-                }
-            });
-        }
-    }
+<%--            $.ajax({--%>
+<%--                method: 'POST',--%>
+<%--                url: '/testtask/securities',--%>
+<%--                dataType: 'JSON',--%>
+<%--                data: data,--%>
 
-
-    function getAll() {
-        isNew = true;
-        var id = null;
-
-        $('#securityList').dataTable().fnDestroy();
-
-        $.ajax({
-            url: "/testtask/securities",
-            type: "GET",
-            dataType: "JSON",
-
-            success: function () {
-                setContext('/testtask/securities');
-                $('#securityToList').DataTable({
-                    pageLength: 16,
-                    ajax: {
-                        url: '/testtask/securities',
-                        dataSrc: ''
-                    },
-                    columns: [
-                        {
-                            title: 'Secid',
-                            data: 'secid'
-                        },
-                        {
-                            title: 'RegNumber',
-                            data: 'regNumber'
-                        },
-                        {
-                            title: 'Name',
-                            data: 'name'
-                        },
-                        {
-                            title: 'EmitentTitle',
-                            data: 'emitentTitle'
-                        },
-                        {
-                            title: 'TradeDate',
-                            data: 'tradeDate'
-                        },
-                        {
-                            title: 'NumTrades',
-                            data: 'regNumber'
-                        },
-                        {
-                            title: 'Open',
-                            data: 'open'
-                        },
-                        {
-                            title: 'Close',
-                            data: 'close'
-                        },
-                        {
-                            "sTitle": "Edit",
-                            "mData": "id",
-                            "render": function (mData, type, row, meta) {
-                                return '<button onClick="getDetails(' + mData + ')">Edit</button>'
-                            },
-                            "defaultContent": "",
-                            "orderable": false
-                        },
-                        {
-                            "sTitle": "Delete",
-                            "mData": "id",
-                            "render": function (mData, type, row, meta) {
-                                return '<button onClick="getDelete(' + mData + ')">Delete</button>'
-                            },
-                            "defaultContent": "",
-                            "orderable": false
-                        }
-                    ]
-                });
-            }
-        });
-    }
+<%--                success: function () {--%>
+<%--                    clearForm();--%>
+<%--                    destroyTable();--%>
+<%--                }--%>
+<%--            });--%>
+<%--    }--%>
 
 
-    function getDetails(id) {
-        $.ajax({
-            type: 'POST',
-            data: {"id": id},
-            url: '/testtask/securities/' + id,
+<%--    function clearForm() {--%>
+<%--        $("#saveSec").val('');--%>
+<%--        // form.find(":input").val("");--%>
+<%--    }--%>
 
-            success: function (data) {
-                isNew = false
-                var obj = JSON.parse(data);
-                id = obj[0].id;
-            }
 
-        });
-    }
-</script>
+<%--    // function updateTable() {--%>
+<%--    //     $.get('/testtask/securities', updateTableByData);--%>
+<%--    // }--%>
+<%--    //--%>
+<%--    // function updateTableByData(data) {--%>
+<%--    //     context.datatableApi.clear().rows.add(data).draw();--%>
+<%--    // }--%>
+
+
+<%--    function updateSec(id) {--%>
+
+<%--            $.ajax({--%>
+<%--                url: '/testtask/securities/' + id,--%>
+<%--                method: 'GET',--%>
+<%--                dataType: 'json',--%>
+<%--                success: function (data) {--%>
+<%--                    $('#id').val(data.id);--%>
+<%--                    $('#secid').val(data.secid);--%>
+<%--                    $('#shortName').val(data.secid);--%>
+<%--                    $('#regNumber').val(data.regNumber);--%>
+<%--                    $('#name').val(data.name);--%>
+<%--                    $('#isin').val(data.isin);--%>
+<%--                    $('#isTraded').val(data.isTraded);--%>
+<%--                    $('#emitentId').val(data.emitentId);--%>
+<%--                    $('#emitentTitle').val(data.emitentTitle);--%>
+<%--                    $('#emitentInn').val(data.emitentInn);--%>
+<%--                    $('#emitentOkpo').val(data.emitentOkpo);--%>
+<%--                    $('#gosReg').val(data.gosReg);--%>
+<%--                    $('#type').val(data.type);--%>
+<%--                    $('#group').val(data.group);--%>
+<%--                    $('#primaryBoardId').val(data.primaryBoardId);--%>
+<%--                    $('#marketPriceBoardId').val(data.marketPriceBoardId);--%>
+
+<%--                }--%>
+<%--            })--%>
+<%--        }--%>
+
+
+
+<%--    function deleteSec(id) {--%>
+<%--        if (confirm("Delete")) {--%>
+<%--            $.ajax({--%>
+<%--                url: "/testtask/securities/" + id,--%>
+<%--                type: "DELETE"--%>
+<%--            }).done(function () {--%>
+<%--                destroyTable();--%>
+<%--            });--%>
+<%--        }--%>
+<%--    }--%>
+
+
+<%--    function destroyTable() {--%>
+<%--        var table = $('#securityList').DataTable();--%>
+<%--        table.destroy();--%>
+<%--        getAll();--%>
+<%--    }--%>
+
+<%--</script>--%>
 
 </body>
 </html>
