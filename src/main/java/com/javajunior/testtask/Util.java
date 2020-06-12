@@ -24,27 +24,29 @@ public class Util {
         }
     }
 
-
+    // validating security name
     public static class Validator {
         public static void checkName(Security security) {
-            char[] legalSigns = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя 0123456789".toCharArray();
-            char[] name = security.getName().toLowerCase().toCharArray();
+            char[] name = security.getName().toCharArray();
 
-            for (char c: name) {
-                for (char legal : legalSigns) {
-                    if (c != legal) throw new Util.IllegalSecurityNameException();
-                }
+            for (char c : name) {
+                if (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC ||
+                        Character.isDigit(c) | Character.isWhitespace(c)) {
+                } else throw new Util.IllegalSecurityNameException();
             }
         }
     }
 
-
+    // Security ---> SecurityTo
     public static class Converter {
         public static List<SecurityTo> convertTo(List<Security> list) {
             List<SecurityTo> result = new ArrayList<>();
 
             for (Security sec : list) {
                 SecurityTo secTo = new SecurityTo(sec);
+
+                if (sec.getHistories().isEmpty()) continue;
+
                 for (History hist : sec.getHistories()) {
                     secTo.setTradeDate(hist.getTradeDate());
                     secTo.setNumTrades(hist.getNumTrades());
@@ -54,7 +56,6 @@ public class Util {
                     result.add(secTo);
                 }
             }
-
             return result;
         }
     }

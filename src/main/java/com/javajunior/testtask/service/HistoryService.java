@@ -20,17 +20,14 @@ public class HistoryService {
         this.securityRepository = securityRepository;
     }
 
-    public void add(History hist) {
+    public void saveOrUpdate(History hist) {
         Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
-        hist.setSecurity(sec);;
-        repository.save(hist);
+        hist.setSecurity(sec);
+         repository.save(hist);
     }
 
-
-    public boolean delete(int id) {
-        int result = repository.deleteById(id);
-        if (result != 0) return true;
-        else throw new Util.EntityNotFoundException();
+    public void delete(int id) {
+        if (repository.delete(id) == 0) throw new Util.EntityNotFoundException();
     }
 
     public List<History> getAll(){
@@ -40,10 +37,6 @@ public class HistoryService {
 
     public History get(int id) throws Util.EntityNotFoundException {
         return repository.findById(id).orElseThrow(Util.EntityNotFoundException::new);
-    }
-
-    public void update(History updated) {
-        repository.save(updated);
     }
 
 }

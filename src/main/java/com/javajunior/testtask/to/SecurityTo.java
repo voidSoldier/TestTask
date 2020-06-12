@@ -2,50 +2,33 @@ package com.javajunior.testtask.to;
 
 import com.javajunior.testtask.model.Security;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class SecurityTo {
 
     private int id;
     private String secid;
+    private String regNumber;
     private String name;
     private String emitentTitle;
 
-
-    // OR in a list of History?
-    private LocalDateTime tradeDate;
+    private LocalDate tradeDate;
     private double numTrades;
     private double open;
     private double close;
 
 
     public SecurityTo(Security sec) {
-//        int id = sec.getId();
-//        String secid = sec.getSecid();
-//        String name = sec.getName();
-//        String emitentTitle =  sec.getEmitentTitle();
-
-
-        this(sec.getId(), sec.getSecid(), sec.getName(), sec.getEmitentTitle());
+        this(sec.getId(), sec.getSecid(), sec.getRegNumber(), sec.getName(), sec.getEmitentTitle());
     }
 
-    private SecurityTo(int id, String secid, String name, String emitentTitle) {
-        this.id = id;
+
+    private SecurityTo(int id, String secid, String regNumber, String name, String emitentTitle) {
         this.secid = secid;
+        this.regNumber = regNumber;
         this.name = name;
         this.emitentTitle = emitentTitle;
     }
-
-//    public SecurityTo(int id, String secid, String name, String emitentTitle, LocalDateTime tradeDate, double numTrades, double open, double close) {
-//        this.id = id;
-//        this.secid = secid;
-//        this.name = name;
-//        this.emitentTitle = emitentTitle;
-//        this.tradeDate = tradeDate;
-//        this.numTrades = numTrades;
-//        this.open = open;
-//        this.close = close;
-//    }
 
     public int getId() {
         return id;
@@ -63,6 +46,14 @@ public class SecurityTo {
         this.secid = secid;
     }
 
+    public String getRegNumber() {
+        return regNumber;
+    }
+
+    public void setRegNumber(String regNumber) {
+        this.regNumber = regNumber;
+    }
+
     public String getName() {
         return name;
     }
@@ -75,15 +66,15 @@ public class SecurityTo {
         return emitentTitle;
     }
 
-    public void setEmitentTitle(String eminentTitle) {
-        this.emitentTitle = eminentTitle;
+    public void setEmitentTitle(String emitentTitle) {
+        this.emitentTitle = emitentTitle;
     }
 
-    public LocalDateTime getTradeDate() {
+    public LocalDate getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(LocalDateTime tradeDate) {
+    public void setTradeDate(LocalDate tradeDate) {
         this.tradeDate = tradeDate;
     }
 
