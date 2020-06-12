@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class HistoryController {
     @Autowired
     private HistoryService service;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveOrUpdate(History history) {
-        log.info("_____new security: {}", history.getSecid());
-
+    public ModelAndView saveOrUpdate(History history) {
+        log.info("_____new history: {}", history.getSecid());
         service.saveOrUpdate(history);
+        return new ModelAndView("index");
     }
 
 //    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -45,8 +46,10 @@ public class HistoryController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public ModelAndView delete(@PathVariable int id) {
+        log.info("deleting history with id {}", id);
         service.delete(id);
+        return new ModelAndView("index");
     }
 
 
@@ -63,14 +66,15 @@ public class HistoryController {
 
     @GetMapping("/{id}")
     public History get(@PathVariable int id) {
+        log.info("getting history with id {}", id);
         return service.get(id);
     }
 
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody History updated) {
-        service.update(updated);
-    }
+//
+//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+//    public void update(@RequestBody History updated) {
+//        service.update(updated);
+//    }
 
 }

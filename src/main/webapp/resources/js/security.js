@@ -6,7 +6,7 @@ function getAll() {
     $('#securityList').dataTable({
         pageLength: 16,
         ajax: {
-            url: '/testtask/securities/',
+            url: '/testtask/securities',
             dataSrc: ''
         },
         columns: [
@@ -84,9 +84,9 @@ function getAll() {
             },
             {
                 "sTitle": "Delete",
-                "mData": "id",
-                "render": function (mData, type, row, meta) {
-                    return '<button onClick="deleteSec(' + mData + ')">Delete</button>'
+                // "mData": "id",
+                "render": function (data, type, row) {
+                    return '<button onClick="deleteSec(' + row.id + ')">Delete</button>'
                 },
                 "defaultContent": "",
                 "orderable": false

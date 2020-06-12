@@ -8,8 +8,6 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
 
-    <%--    <script type="text/javascript" src="../resources/js/js.js" defer></script>--%>
-
     <script type='text/javascript'>
         $(document).ready(function () {
             getAll();
@@ -62,13 +60,34 @@
         function destroyTable() {
             var table = $('#securityToList').DataTable();
             table.destroy();
+        }
+
+        function updateFilteredTable() {
+            $.ajax({
+                type: "GET",
+                url: "/testtask/securities" + "/filter",
+                data: $("#filter").serialize(),
+
+                success: function (data) {
+                    var table = $('#securityToList').DataTable();
+                    table.clear();
+                    table.rows.add(data).draw();
+                }
+            })
+        }
+
+        function resetFilter() {
+            $("#emitentTitle").val('');
+            $("#tradeDate").val('');
+            destroyTable();
             getAll();
         }
+
+
     </script>
     <title>Title</title>
 </head>
 <body>
-<script type="text/javascript" src="resources/js/js.js" defer></script>
 <section>
     <hr/>
     <h2>Securities</h2>
@@ -82,13 +101,13 @@
                 </div>
                 <div>
                     <label for="tradeDate">Trade Date</label>
-                    <input name="tradeDate" id="tradeDate">
+                    <input type="date" name="tradeDate" id="tradeDate">
                 </div>
             </div>
         </form>
     </div>
     <div>
-        <button onclick="clearFilter()">Clear filter</button>
+        <button onclick="resetFilter()">Clear filter</button>
         <button onclick="updateFilteredTable()">Filter</button>
     </div>
     <br>
@@ -98,45 +117,11 @@
 
     </table>
     <button onclick="destroyTable()">Update table</button>
-    <%--    <table border="1" cellpadding="8" cellspacing="0">--%>
-    <%--        <thead>--%>
-    <%--        <tr>--%>
-    <%--            <th>regNumber</th>--%>
-    <%--            <th>name</th>--%>
-    <%--            <th>emitentTitle</th>--%>
-    <%--            <th>tradeDate</th>--%>
-    <%--            <th>numTrades</th>--%>
-    <%--            <th>open</th>--%>
-    <%--            <th>close</th>--%>
-    <%--            <th></th>--%>
-    <%--            <th></th>--%>
-    <%--        </tr>--%>
-    <%--        </thead>--%>
-    <%--        <c:forEach items="${securities}" var="secto">--%>
-    <%--            <jsp:useBean id="secto" type="com.javajunior.testtask.to.SecurityTo"/>--%>
-    <%--            <tr>--%>
-    <%--                <td></td>--%>
-    <%--                <td>${secto.regNumber}</td>--%>
-    <%--                <td>${secto.name}</td>--%>
-    <%--                <td>${secto.emitentTitle}</td>--%>
-    <%--                <td>${secto.tradeDate}</td>--%>
-    <%--                <td>${secto.numTrades}</td>--%>
-    <%--                <td>${secto.open}</td>--%>
-    <%--                <td>${secto.close}</td>--%>
-    <%--                <td><a href="securities/update?id=${secto.id}">Update Security</a></td>--%>
-    <%--                <td><a href="securities/delete?id=${secto.id}">Delete Security</a></td>--%>
-    <%--            </tr>--%>
-    <%--        </c:forEach>--%>
-    <%--    </table>--%>
-    <br>
-    <br>
-    <br>
-    <a href="newSec.jsp">Create new security</a>
-    <br>
-    <br>
-    <br>
-    <a href="newHist.jsp">Create new history</a>
 
+    <br>
+    <br>
+    <br>
+    <a href="index.jsp">Home</a>
 </section>
 </body>
 </html>

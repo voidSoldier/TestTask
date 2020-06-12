@@ -7,11 +7,13 @@ import com.javajunior.testtask.to.SecurityTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,32 +30,35 @@ public class SecurityController {
     private SecurityService service;
 
 
-//    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    //    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
 //    public void add(Security security) {
 //        log.info("adding new security: {}", security.getName());
 //        Util.Validator.checkName(security);
 //        service.add(security);
 //    }
-
+//
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveOrUpdate(Security security) {
+    public ModelAndView saveOrUpdate(Security security) {
         log.info("_____new security: {}", security.getName());
         Util.Validator.checkName(security);
         service.saveOrUpdate(security);
+        return new ModelAndView("index");
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public ModelAndView delete(@PathVariable int id) {
         log.info("deleting security with id {}", id);
         service.delete(id);
+        return new ModelAndView("index");
     }
 
 
     @GetMapping("/with-history")
     public ResponseEntity<List<SecurityTo>> getAllWithHistory() {
-        log.info("getting all securities");
+        log.info("getting all securities with history");
         try {
             return new ResponseEntity<>(service.getAllWithHistory(), HttpStatus.OK);
         } catch (Exception e) {
@@ -78,12 +83,17 @@ public class SecurityController {
     }
 
     @GetMapping(value = "/filter")
-    public List<SecurityTo> filter(@RequestParam @Nullable LocalDate tradeDate, @RequestParam @Nullable String emitentTitle) {
+    public ResponseEntity<List<SecurityTo>> filter(@RequestParam @Nullable String tradeDate, @RequestParam @Nullable String emitentTitle) {
         log.info("filtering securities");
-        return service.filter(tradeDate, emitentTitle);
+//        return service.filter(tradeDate, emitentTitle);
+        LocalDate ld = tradeDate == null || tradeDate.isEmpty() ? null : LocalDate.parse(tradeDate);
+        try {
+            return new ResponseEntity<>(service.filter(ld, emitentTitle), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
-
-
 //    @PutMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
 //    @ResponseStatus(value = HttpStatus.NO_CONTENT)
 //    public void update(@RequestBody Security updated) {
@@ -92,4 +102,4 @@ public class SecurityController {
 //        service.update(updated);
 //    }
 
-}
+    }

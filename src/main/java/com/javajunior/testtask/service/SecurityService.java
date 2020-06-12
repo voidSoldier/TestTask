@@ -19,8 +19,8 @@ public class SecurityService {
         this.repository = repository;
     }
 
-    public void saveOrUpdate(Security security) {
-        repository.save(security);
+    public Security saveOrUpdate(Security security) {
+       return repository.save(security);
     }
 
 //
@@ -50,9 +50,13 @@ public class SecurityService {
 
     public List<SecurityTo> filter(LocalDate tradeDate, String emitentTitle) {
         List<SecurityTo> all = getAllWithHistory();
+//        return all.stream()
+//                .filter(sto -> tradeDate == null ? true : sto.getTradeDate() == tradeDate ||
+//                        emitentTitle == null ? true : sto.getEmitentTitle().equals(emitentTitle))
+//                .collect(Collectors.toList());
         return all.stream()
-                .filter(sto -> tradeDate == null ? sto.getTradeDate() == tradeDate : true &&
-                        emitentTitle == null ? sto.getEmitentTitle().equals(emitentTitle) : true)
+                .filter(sto -> tradeDate == null || sto.getTradeDate() == tradeDate)
+                .filter(sto -> emitentTitle == null || emitentTitle.equals(sto.getEmitentTitle()))
                 .collect(Collectors.toList());
     }
 

@@ -114,7 +114,7 @@ function saveHistory() {
 
     $.ajax({
         method: 'POST',
-        url: '/testtask/histories/',
+        url: '/testtask/histories',
         dataType: 'JSON',
         data: data,
 
@@ -140,21 +140,25 @@ function updateHist(id) {
         dataType: 'json',
         success: function (data) {
             $('#id').val(data.id);
+            $('#boardId').val(data.boardId);
+            $('#tradeDate').val(data.tradeDate);
+            $('#shortName').val(data.shortName);
             $('#secid').val(data.secid);
-            $('#shortName').val(data.secid);
-            $('#regNumber').val(data.regNumber);
-            $('#name').val(data.name);
-            $('#isin').val(data.isin);
+            $('#numTrades').val(data.numTrades);
             $('#isTraded').val(data.isTraded);
-            $('#emitentId').val(data.emitentId);
-            $('#emitentTitle').val(data.emitentTitle);
-            $('#emitentInn').val(data.emitentInn);
-            $('#emitentOkpo').val(data.emitentOkpo);
-            $('#gosReg').val(data.gosReg);
-            $('#type').val(data.type);
-            $('#group').val(data.group);
-            $('#primaryBoardId').val(data.primaryBoardId);
-            $('#marketPriceBoardId').val(data.marketPriceBoardId);
+            $('#value').val(data.value);
+            $('#open').val(data.open);
+            $('#low').val(data.low);
+            $('#high').val(data.high);
+            $('#waPrice').val(data.waPrice);
+            $('#close').val(data.close);
+            $('#volume').val(data.volume);
+            $('#marketPrice2').val(data.marketPrice2);
+            $('#marketPrice3').val(data.marketPrice3);
+            $('#marketPrice3TradesValue').val(data.marketPrice3TradesValue);
+            $('#admittedValue').val(data.admittedValue);
+            $('#waVal').val(data.waVal);
+
 
         }
     })

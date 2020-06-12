@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "securities", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "secid"}, name = "security_unique_name_secid_idx")})
+@Table(name = "securities")
 public class Security {
 
     @Id
