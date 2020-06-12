@@ -1,7 +1,6 @@
 package com.javajunior.testtask.repository;
 
 
-import com.javajunior.testtask.model.History;
 import com.javajunior.testtask.model.Security;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

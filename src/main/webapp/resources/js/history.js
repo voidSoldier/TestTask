@@ -131,7 +131,6 @@ function clearForm() {
 }
 
 
-
 function updateHist(id) {
 
     $.ajax({
@@ -163,7 +162,6 @@ function updateHist(id) {
         }
     })
 }
-
 
 
 function deleteHist(id) {

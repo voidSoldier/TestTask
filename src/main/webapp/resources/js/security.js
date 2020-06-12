@@ -117,7 +117,6 @@ function clearForm() {
 }
 
 
-
 function updateSec(id) {
 
     $.ajax({
@@ -145,7 +144,6 @@ function updateSec(id) {
         }
     })
 }
-
 
 
 function deleteSec(id) {

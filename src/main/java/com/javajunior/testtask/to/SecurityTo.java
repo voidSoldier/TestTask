@@ -3,7 +3,6 @@ package com.javajunior.testtask.to;
 import com.javajunior.testtask.model.Security;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class SecurityTo {
 
@@ -30,18 +29,6 @@ public class SecurityTo {
         this.name = name;
         this.emitentTitle = emitentTitle;
     }
-
-//    public SecurityTo(int id, String secid, String name, String emitentTitle, LocalDateTime tradeDate, double numTrades, double open, double close) {
-//        this.id = id;
-//        this.secid = secid;
-//        this.name = name;
-//        this.emitentTitle = emitentTitle;
-//        this.tradeDate = tradeDate;
-//        this.numTrades = numTrades;
-//        this.open = open;
-//        this.close = close;
-//    }
-
 
     public int getId() {
         return id;

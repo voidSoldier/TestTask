@@ -15,12 +15,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class SecParser {
@@ -28,54 +25,10 @@ public class SecParser {
 
     private List<Security> securityList;
     private List<History> historyList;
-    private Map<List<Security>, List<History>> result;
 
     public SecParser() {
         securityList = new ArrayList<>();
         historyList = new ArrayList<>();
-        result = new HashMap<>();
-    }
-
-    public Map<List<Security>, List<History>> parse(InputStream is) throws ParserConfigurationException, IOException, SAXException {
-//public Map<List<Security>, List<History>> parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document doc = dBuilder.parse(is);
-//        Element dataType = doc.getElementById("data");
-
-//        if (doc == null || !doc.hasChildNodes()) throw new NullPointerException("doc is null or has no child nodes");
-
-        NodeList nodes = doc.getElementsByTagName("data");
-        Element e = (Element) nodes.item(0);
-        if (("securities").equals(e.getAttribute("id"))) {
-            parseSecurity(doc);
-        } else parseHistory(doc);
-        result.put(securityList, historyList);
-        return result;
-    }
-
-    public void parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
-        log.info("in the parse method");
-        DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document doc;
-
-        for (MultipartFile f : files) {
-            doc = dBuilder.parse(f.getInputStream());
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-            doc.getDocumentElement().normalize();
-
-
-            NodeList nodes = doc.getElementsByTagName("data");
-            Element e = (Element) nodes.item(0);
-            if (("securities").equals(e.getAttribute("id"))) {
-                parseSecurity(doc);
-            } else parseHistory(doc);
-
-        }
-
-//        matchHistoryToSecurity();
-//        result.put(securityList, historyList);
-//        return result;
     }
 
     public List<Security> getSecurityList(){
@@ -86,11 +39,30 @@ public class SecParser {
         return historyList;
     }
 
+    public void parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
+        log.info("in the parse method");
+        DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document doc;
+
+        for (MultipartFile f : files) {
+            doc = dBuilder.parse(f.getInputStream());
+            //http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            doc.getDocumentElement().normalize();
+
+            NodeList nodes = doc.getElementsByTagName("data");
+            Element e = (Element) nodes.item(0);
+            if (("securities").equals(e.getAttribute("id"))) {
+                parseSecurity(doc);
+            } else parseHistory(doc);
+
+        }
+
+    }
+
     private void parseSecurity(Document doc) {
         log.info("in the parse SECURITY method");
 
         NodeList nodes = doc.getElementsByTagName("row");
-
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
@@ -118,8 +90,6 @@ public class SecParser {
                 securityList.add(newSec);
             }
         }
-
-
     }
 
     private String getStr(Element e, String attr) {
@@ -144,7 +114,6 @@ public class SecParser {
 
     private void parseHistory(Document doc) {
         log.info("in the parse HISTORY method");
-
 
         NodeList nodes = doc.getElementsByTagName("row");
 
@@ -178,10 +147,9 @@ public class SecParser {
             }
         }
 
-
     }
 
-    public Map<List<Security>, List<History>> matchHistoryToSecurity() {
+    public void matchHistoryToSecurity() {
         log.info("in the --matchHistoryToSecurity-- method");
         List<History> copy = new ArrayList<>();
 
@@ -190,7 +158,6 @@ public class SecParser {
                 String secid = hist.getSecid().toLowerCase();
                 for (Security sec : securityList) {
                     if (secid.equals(sec.getSecid().toLowerCase())) {
-
                         hist.setSecurity(sec);
                     }
                 }
@@ -198,16 +165,5 @@ public class SecParser {
             }
         }
         historyList.removeAll(copy);
-//        for (Security sec : securityList) {
-//            String secid = sec.getSecid().toLowerCase();
-//            for (History hist : historyList) {
-//                if (secid.equals(hist.getSecid().toLowerCase())) {
-//                    hist.setSecurity(sec);
-//                    sec.addHistory(hist);
-//                }
-//            }
-//        }
-        result.put(securityList, historyList);
-        return result;
     }
 }

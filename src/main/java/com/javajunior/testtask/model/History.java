@@ -87,52 +87,6 @@ public class History {
     public History() {
     }
 
-//    public History(String boardId, @NotNull LocalDateTime tradeDate, String shortName, @NotBlank String secid,
-//                   @NotNull double numTrades, double value, @NotNull double open, double low, double high, double legalClosePrice,
-//                   double waPrice, @NotNull double close, double volume, double marketPrice2, double marketPrice3, double admittedQuote,
-//                   double mp2ValTrd, double marketPrice3TradesValue, double admittedValue, double waVal, Security security) {
-//        this.boardId = boardId;
-//        this.tradeDate = tradeDate;
-//        this.shortName = shortName;
-//        this.secid = secid;
-//        this.numTrades = numTrades;
-//        this.value = value;
-//        this.open = open;
-//        this.low = low;
-//        this.high = high;
-//        this.legalClosePrice = legalClosePrice;
-//        this.waPrice = waPrice;
-//        this.close = close;
-//        this.volume = volume;
-//        this.marketPrice2 = marketPrice2;
-//        this.marketPrice3 = marketPrice3;
-//        this.admittedQuote = admittedQuote;
-//        this.mp2ValTrd = mp2ValTrd;
-//        this.marketPrice3TradesValue = marketPrice3TradesValue;
-//        this.admittedValue = admittedValue;
-//        this.waVal = waVal;
-//        this.security = security;
-//    }
-//
-//    // with String secid
-//    public History(LocalDateTime tradeDate, double numTrades, double open, double close, String secid) {
-//        this.tradeDate = tradeDate;
-//        this.numTrades = numTrades;
-//        this.open = open;
-//        this.close = close;
-//        this.secid = secid;
-//    }
-//
-////    // with Security object
-//    public History(LocalDateTime tradeDate, double numTrades, double open, double close, Security security) {
-//        this.tradeDate = tradeDate;
-//        this.numTrades = numTrades;
-//        this.open = open;
-//        this.close = close;
-//        this.security = security;
-//        this.secid = security.getSecid();
-//    }
-
     public Integer getId() {
         return id;
     }

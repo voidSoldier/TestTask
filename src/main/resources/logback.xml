@@ -13,7 +13,6 @@
     </appender>
 
     <logger name="ru.javajunior.testtask" level="debug"/>
-    <!--<logger name="org.springframework.web.servlet" level="debug"/>-->
     <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="debug"/>
 
     <root level="info">

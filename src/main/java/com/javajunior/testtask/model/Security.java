@@ -11,7 +11,6 @@ import java.util.List;
 public class Security {
 
     @Id
-//    @Column(columnDefinition = "INTEGER")
     private int id;
 
     @Column(name = "secid", nullable = false, unique = true)
@@ -60,19 +59,12 @@ public class Security {
     @Column(name = "marketprice_board_id", nullable = false)
     private String marketPriceBoardId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "security")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "security")
     @OrderBy("tradeDate DESC")
     private List<History> histories;
 
     public Security() {
     }
-
-//    public Security(int id, String secid, String name, String emitentTitle) {
-//        this.id = id;
-//        this.secid = secid;
-//        this.name = name;
-//        this.emitentTitle = emitentTitle;
-//    }
 
 
     public Security(@NotEmpty int id, @NotBlank String secid, String shortName, String regNumber,

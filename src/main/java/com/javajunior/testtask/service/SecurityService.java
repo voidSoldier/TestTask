@@ -19,14 +19,9 @@ public class SecurityService {
         this.repository = repository;
     }
 
-    public Security saveOrUpdate(Security security) {
-       return repository.save(security);
+    public void saveOrUpdate(Security security) {
+        repository.save(security);
     }
-
-//
-//    public void add(Security security) {
-//        repository.save(security);
-//    }
 
     public void delete(int id) {
         if (repository.delete(id) == 0) throw new Util.EntityNotFoundException();
@@ -44,17 +39,9 @@ public class SecurityService {
         return repository.findById(id).orElseThrow(Util.EntityNotFoundException::new);
     }
 
-//    public void update(Security updated) {
-//        repository.save(updated);
-//    }
-
     public List<SecurityTo> filter(LocalDate tradeDate, String emitentTitle) {
-        List<SecurityTo> all = getAllWithHistory();
-//        return all.stream()
-//                .filter(sto -> tradeDate == null ? true : sto.getTradeDate() == tradeDate ||
-//                        emitentTitle == null ? true : sto.getEmitentTitle().equals(emitentTitle))
-//                .collect(Collectors.toList());
-        return all.stream()
+
+        return getAllWithHistory().stream()
                 .filter(sto -> tradeDate == null || sto.getTradeDate() == tradeDate)
                 .filter(sto -> emitentTitle == null || emitentTitle.equals(sto.getEmitentTitle()))
                 .collect(Collectors.toList());

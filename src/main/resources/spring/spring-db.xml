@@ -60,11 +60,6 @@
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-<!--    <bean class="org.springframework.beans.factory.config.MethodInvokingBean">-->
-<!--        <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>-->
-<!--    </bean>-->
-
-    <!--no pooling-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
           p:driverClassName="org.hsqldb.jdbc.JDBCDriver"

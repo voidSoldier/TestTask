@@ -4,18 +4,16 @@
 <head>
     <title>Title</title>
 
-<%--    <form method="post" action="load" >--%>
-
 </head>
 <body>
 <form:form method="post" action="load" enctype="multipart/form-data">
-    <label for="file">Choose security files to upload</label>
+    <label for="file">Choose <b>security</b> files to upload</label>
     <input type="file" id="file" name="file" multiple>
     <input type="submit" value="Submit" />
 </form:form>
 
 <form:form method="post" action="loadHistory" enctype="multipart/form-data">
-    <label for="file">Choose history files to upload</label>
+    <label for="file">Choose <b>history</b> files to upload</label>
     <input type="file" id="file" name="file" multiple>
     <input type="submit" value="Submit" />
 </form:form>

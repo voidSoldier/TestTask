@@ -28,7 +28,6 @@ public class Util {
     public static class Validator {
         public static void checkName(Security security) {
             char[] name = security.getName().toCharArray();
-            boolean isValid = true;
 
             for (char c : name) {
                 if (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC ||
@@ -57,7 +56,6 @@ public class Util {
                     result.add(secTo);
                 }
             }
-
             return result;
         }
     }

@@ -15,10 +15,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = HistoryController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/histories", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HistoryController {
 
-    static final String REST_URL = "/histories";
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -32,18 +31,6 @@ public class HistoryController {
         return new ModelAndView("index");
     }
 
-//    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//    public ResponseEntity<History> add(History history) {
-//        History created = service.add(history);
-//
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(REST_URL + "/{id}")
-//                .buildAndExpand(created.getId()).toUri();
-//
-//        return ResponseEntity.created(uriOfNewResource).body(created);
-//
-//    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ModelAndView delete(@PathVariable int id) {
@@ -51,7 +38,6 @@ public class HistoryController {
         service.delete(id);
         return new ModelAndView("index");
     }
-
 
 
     @GetMapping
@@ -69,12 +55,5 @@ public class HistoryController {
         log.info("getting history with id {}", id);
         return service.get(id);
     }
-
-//
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void update(@RequestBody History updated) {
-//        service.update(updated);
-//    }
 
 }

@@ -7,7 +7,6 @@ import com.javajunior.testtask.to.SecurityTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +18,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = SecurityController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/securities", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SecurityController {
-
-    static final String REST_URL = "/securities";
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
 
     @Autowired
     private SecurityService service;
 
-
-    //    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//    public void add(Security security) {
-//        log.info("adding new security: {}", security.getName());
-//        Util.Validator.checkName(security);
-//        service.add(security);
-//    }
-//
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView saveOrUpdate(Security security) {
@@ -85,7 +74,6 @@ public class SecurityController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<SecurityTo>> filter(@RequestParam @Nullable String tradeDate, @RequestParam @Nullable String emitentTitle) {
         log.info("filtering securities");
-//        return service.filter(tradeDate, emitentTitle);
         LocalDate ld = tradeDate == null || tradeDate.isEmpty() ? null : LocalDate.parse(tradeDate);
         try {
             return new ResponseEntity<>(service.filter(ld, emitentTitle), HttpStatus.OK);
@@ -94,12 +82,5 @@ public class SecurityController {
         }
 
     }
-//    @PutMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void update(@RequestBody Security updated) {
-//        log.info("updating security {}", updated);
-//        Util.Validator.checkName(updated);
-//        service.update(updated);
-//    }
 
-    }
+}
