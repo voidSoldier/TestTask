@@ -24,7 +24,7 @@ public class Util {
         }
     }
 
-
+    // validating security name
     public static class Validator {
         public static void checkName(Security security) {
             char[] name = security.getName().toCharArray();
@@ -37,7 +37,7 @@ public class Util {
         }
     }
 
-
+    // Security ---> SecurityTo
     public static class Converter {
         public static List<SecurityTo> convertTo(List<Security> list) {
             List<SecurityTo> result = new ArrayList<>();

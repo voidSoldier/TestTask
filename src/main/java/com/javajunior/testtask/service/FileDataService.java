@@ -24,7 +24,6 @@ public class FileDataService {
 
 
     private SecParser parser = new SecParser();
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public FileDataService(HistoryRepository historyRepository, SecurityRepository securityRepository) {
         this.historyRepository = historyRepository;
@@ -32,20 +31,15 @@ public class FileDataService {
     }
 
     public void addDataFromFiles(MultipartFile[] files) {
-        log.info("in ---addDataFromFiles--- method");
         try {
-            log.info("try ---parsing files--- ");
             parser.parse(files);
-            log.info("try ---matchHistoryToSecurity--- ");
             parser.matchHistoryToSecurity();
 
             if (parser.getHistoryList().isEmpty()) {
-                log.info("mapping ---securities--- ");
                 for (Security sec : parser.getSecurityList()) {
                     securityRepository.saveAndFlush(sec);
                 }
             } else {
-                log.info("mapping ---histories--- ");
                 for (History hist : parser.getHistoryList()) {
                     historyRepository.saveAndFlush(hist);
                 }

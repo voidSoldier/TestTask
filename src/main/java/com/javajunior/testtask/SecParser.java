@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class SecParser {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private List<Security> securityList;
     private List<History> historyList;
@@ -40,7 +40,6 @@ public class SecParser {
     }
 
     public void parse(MultipartFile[] files) throws ParserConfigurationException, IOException, SAXException {
-        log.info("in the parse method");
         DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document doc;
 
@@ -60,7 +59,6 @@ public class SecParser {
     }
 
     private void parseSecurity(Document doc) {
-        log.info("in the parse SECURITY method");
 
         NodeList nodes = doc.getElementsByTagName("row");
 
@@ -92,28 +90,8 @@ public class SecParser {
         }
     }
 
-    private String getStr(Element e, String attr) {
-        return e.getAttribute(attr);
-    }
-
-    private int getInt(Element e, String attr) {
-        String attrStr = e.getAttribute(attr);
-        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Integer.parseInt(attrStr);
-    }
-
-    private double getDouble(Element e, String attr) {
-        String attrStr = e.getAttribute(attr);
-        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Double.parseDouble(attrStr);
-    }
-
-    private LocalDate getDate(Element e) {
-        String date = e.getAttribute("TRADEDATE");
-        return date.isBlank() || date.isEmpty() ? null : LocalDate.parse(date);
-    }
-
 
     private void parseHistory(Document doc) {
-        log.info("in the parse HISTORY method");
 
         NodeList nodes = doc.getElementsByTagName("row");
 
@@ -149,8 +127,27 @@ public class SecParser {
 
     }
 
+    private String getStr(Element e, String attr) {
+        return e.getAttribute(attr);
+    }
+
+    private int getInt(Element e, String attr) {
+        String attrStr = e.getAttribute(attr);
+        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Integer.parseInt(attrStr);
+    }
+
+    private double getDouble(Element e, String attr) {
+        String attrStr = e.getAttribute(attr);
+        return attrStr.isEmpty() || attrStr.isBlank() ? 0 : Double.parseDouble(attrStr);
+    }
+
+    private LocalDate getDate(Element e) {
+        String date = e.getAttribute("TRADEDATE");
+        return date.isBlank() || date.isEmpty() ? null : LocalDate.parse(date);
+    }
+
+
     public void matchHistoryToSecurity() {
-        log.info("in the --matchHistoryToSecurity-- method");
         List<History> copy = new ArrayList<>();
 
         if (!securityList.isEmpty() || !historyList.isEmpty()) {
