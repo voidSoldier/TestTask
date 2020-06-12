@@ -13,6 +13,6 @@
 - File upload: Apache Commons FileUpload 1.4
 
 ### Working with the database require:<br>
- - uploading files manually: first upload security files first, then history files.<br>
+ - uploading files manually: first upload Security files, then History files.<br>
  OR<br>
  - creating new instances of Security and History objects: Security first, History second. 
