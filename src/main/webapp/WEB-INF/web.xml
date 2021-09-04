@@ -6,7 +6,6 @@
 
     <display-name>TestTask</display-name>
 
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>

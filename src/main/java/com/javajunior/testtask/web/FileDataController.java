@@ -23,18 +23,14 @@ public class FileDataController {
     @PostMapping("/load")
     public ModelAndView uploadSecurity(@RequestParam("file") MultipartFile[] files) throws IOException {
         log.info("_____uploading files      ----->loadSecurity");
-
         service.addDataFromFiles(files);
         return new ModelAndView("/load");
-
     }
 
     @PostMapping("/loadHistory")
     public ModelAndView uploadHistory(@RequestParam("file") MultipartFile[] files) throws IOException {
         log.info("_____uploading files       ----->loadHistory");
-
         service.addDataFromFiles(files);
         return new ModelAndView("/load");
-
     }
 }

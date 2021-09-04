@@ -2,8 +2,6 @@ package com.javajunior.testtask;
 
 import com.javajunior.testtask.model.History;
 import com.javajunior.testtask.model.Security;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 
 
 public class SecParser {
@@ -50,12 +48,12 @@ public class SecParser {
 
             NodeList nodes = doc.getElementsByTagName("data");
             Element e = (Element) nodes.item(0);
-            if (("securities").equals(e.getAttribute("id"))) {
+
+            if ("securities".equals(e.getAttribute("id")))
                 parseSecurity(doc);
-            } else parseHistory(doc);
-
+            else
+                parseHistory(doc);
         }
-
     }
 
     private void parseSecurity(Document doc) {
@@ -89,7 +87,6 @@ public class SecParser {
             }
         }
     }
-
 
     private void parseHistory(Document doc) {
 
@@ -153,11 +150,10 @@ public class SecParser {
         if (!securityList.isEmpty() || !historyList.isEmpty()) {
             for (History hist : historyList) {
                 String secid = hist.getSecid().toLowerCase();
-                for (Security sec : securityList) {
-                    if (secid.equals(sec.getSecid().toLowerCase())) {
-                        hist.setSecurity(sec);
-                    }
-                }
+                securityList.stream()
+                        .filter(s -> Objects.equals(secid, s.getSecid().toLowerCase()))
+                        .forEach(hist::setSecurity);
+
                 if (hist.getSecurity() == null) copy.add(hist);
             }
         }

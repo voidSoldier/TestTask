@@ -23,7 +23,7 @@ public class HistoryService {
     public void saveOrUpdate(History hist) {
         Security sec = securityRepository.findSecurityBySecid(hist.getSecid());
         hist.setSecurity(sec);
-         repository.save(hist);
+        repository.save(hist);
     }
 
     public void delete(int id) {

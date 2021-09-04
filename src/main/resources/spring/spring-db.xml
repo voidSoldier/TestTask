@@ -11,20 +11,19 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-
     <context:component-scan base-package="com.javajunior.testtask.**.service"/>
-    <jpa:repositories base-package="com.javajunior.testtask.**.repository"/>
+    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
+    <tx:annotation-driven/>
 
+    <jpa:repositories base-package="com.javajunior.testtask.**.repository"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="classpath:db/initDB.sql"/>
     </jdbc:initialize-database>
 
-
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="com.javajunior.testtask.model">
-
 
         <property name="jpaPropertyMap">
             <map>
@@ -32,7 +31,6 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="${hibernate.use_sql_comments}"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).JPA_PROXY_COMPLIANCE}" value="false"/>
-                <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
 
                 <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}"
@@ -40,8 +38,7 @@
                 <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}"
                        value="org.ehcache.jsr107.EhcacheCachingProvider"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> <!--default-->
-
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/>
             </map>
         </property>
 
@@ -50,15 +47,12 @@
                   p:showSql="${jpa.showSql}">
             </bean>
         </property>
+
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
-
-    <tx:annotation-driven/>
-
-
-    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
@@ -66,4 +60,5 @@
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>
+
 </beans>
