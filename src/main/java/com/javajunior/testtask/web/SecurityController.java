@@ -20,11 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/securities", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SecurityController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
-
 
     @Autowired
     private SecurityService service;
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
@@ -35,7 +34,6 @@ public class SecurityController {
         return new ModelAndView("index");
     }
 
-
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public ModelAndView delete(@PathVariable int id) {
@@ -43,7 +41,6 @@ public class SecurityController {
         service.delete(id);
         return new ModelAndView("index");
     }
-
 
     @GetMapping("/with-history")
     public ResponseEntity<List<SecurityTo>> getAllWithHistory() {
@@ -80,7 +77,5 @@ public class SecurityController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
-
 }

@@ -39,7 +39,6 @@ public class HistoryController {
         return new ModelAndView("index");
     }
 
-
     @GetMapping
     public ResponseEntity<List<History>> getAll() {
         log.info("getting all history");
@@ -55,5 +54,4 @@ public class HistoryController {
         log.info("getting history with id {}", id);
         return service.get(id);
     }
-
 }

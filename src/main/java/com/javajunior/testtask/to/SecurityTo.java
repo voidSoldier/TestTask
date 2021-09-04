@@ -17,11 +17,9 @@ public class SecurityTo {
     private double open;
     private double close;
 
-
     public SecurityTo(Security sec) {
         this(sec.getId(), sec.getSecid(), sec.getRegNumber(), sec.getName(), sec.getEmitentTitle());
     }
-
 
     private SecurityTo(int id, String secid, String regNumber, String name, String emitentTitle) {
         this.secid = secid;
