@@ -17,7 +17,7 @@
             $('#securityToList').DataTable({
                 pageLength: 16,
                 ajax: {
-                    url: '/testtask/securities/with-history',
+                    url: '/stockdataparser/securities/with-history',
                     dataSrc: ''
                 },
                 columns: [
@@ -65,7 +65,7 @@
         function updateFilteredTable() {
             $.ajax({
                 type: "GET",
-                url: "/testtask/securities" + "/filter",
+                url: "/stockdataparser/securities" + "/filter",
                 data: $("#filter").serialize(),
 
                 success: function (data) {

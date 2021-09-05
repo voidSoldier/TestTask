@@ -1,4 +1,4 @@
-package com.javajunior.testtask.model;
+package com.javajunior.stockdataparser.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,6 +1,16 @@
-# TestTask
+# StockDataParser
 
-## Technologies applied in the project:
+Сервис по обработке выгруженных данных из Московской биржи (описание API: https://fs.moex.com/files/6523) с базовым UI.
+Сервис позволяет:
+- Импорт объектов из выгруженных xml-файлов с информацией о ценных бумагах и историей торгов за определенную дату;
+- CRUD операции по объектам;
+- При ручном сохранении ценной бумаги проводится валидация передаваемых данных в поле name - только кириллица, цифры и пробел;
+- Выводится таблицы с данными (secid, regnumber, name, emitent_title, tradedate, numtrades, open, close);
+- Сортировка по столбцам и фильтрация по полям emitent_title и tradedate.<br/><br/>
+<i>Поле для связи объектов: SECID. Допускается существование ценной бумаги без истории, истории без описания бумаги - нет.</i>
+
+
+### Stack:
 - Spring 5
 - Spring Data 2
 - Maven
@@ -12,7 +22,7 @@
 - Logging: Logback and SLF4G
 - File upload: Apache Commons FileUpload 1.4
 
-### Working with the database require:<br>
- - uploading files manually: first upload Security files, then History files.<br>
- OR<br>
- - creating new instances of Security and History objects: Security first, History second. 
+#### Для работы с сервисом необходимо:<br>
+- загрузить файлы с данными (сначала с информацией о ценных бумагах, затем - историю торгов)<br>
+<i>или</i><br/>
+- создать вручную объекты ценных бумаг (Security) и истории торгов (History)

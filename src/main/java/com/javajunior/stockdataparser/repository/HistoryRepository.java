@@ -1,6 +1,6 @@
-package com.javajunior.testtask.repository;
+package com.javajunior.stockdataparser.repository;
 
-import com.javajunior.testtask.model.History;
+import com.javajunior.stockdataparser.model.History;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

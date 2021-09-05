@@ -6,7 +6,7 @@ function getAll() {
     $('#historyList').DataTable({
         pageLength: 16,
         ajax: {
-            url: '/testtask/histories',
+            url: '/stockdataparser/histories',
             dataSrc: ''
         },
         columns: [
@@ -114,7 +114,7 @@ function saveHistory() {
 
     $.ajax({
         method: 'POST',
-        url: '/testtask/histories',
+        url: '/stockdataparser/histories',
         dataType: 'JSON',
         data: data,
 
@@ -134,7 +134,7 @@ function clearForm() {
 function updateHist(id) {
 
     $.ajax({
-        url: '/testtask/histories/' + id,
+        url: '/stockdataparser/histories/' + id,
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -167,7 +167,7 @@ function updateHist(id) {
 function deleteHist(id) {
     if (confirm("Delete")) {
         $.ajax({
-            url: "/testtask/histories/" + id,
+            url: "/stockdataparser/histories/" + id,
             type: "DELETE"
         }).done(function () {
             destroyTable();

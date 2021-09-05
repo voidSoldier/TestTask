@@ -1,6 +1,6 @@
-package com.javajunior.testtask.to;
+package com.javajunior.stockdataparser.to;
 
-import com.javajunior.testtask.model.Security;
+import com.javajunior.stockdataparser.model.Security;
 
 import java.time.LocalDate;
 

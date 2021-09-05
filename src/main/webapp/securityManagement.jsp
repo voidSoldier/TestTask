@@ -13,7 +13,7 @@
 <h2>Security records</h2>
 <table id="securityList" class="display" style="width:100%"></table>
 <br><br><br><br><br>
-<jsp:useBean id="sec" class="com.javajunior.testtask.model.Security" scope="request"/>
+<jsp:useBean id="sec" class="com.javajunior.stockdataparser.model.Security" scope="request"/>
 <h3>Add or update security record</h3>
 <form id="saveSec" method="post" action="${pageContext.request.contextPath}/securities">
     <label for="id">Id</label><br>

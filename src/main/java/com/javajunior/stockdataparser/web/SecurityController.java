@@ -1,9 +1,9 @@
-package com.javajunior.testtask.web;
+package com.javajunior.stockdataparser.web;
 
-import com.javajunior.testtask.Util;
-import com.javajunior.testtask.model.Security;
-import com.javajunior.testtask.service.SecurityService;
-import com.javajunior.testtask.to.SecurityTo;
+import com.javajunior.stockdataparser.Util;
+import com.javajunior.stockdataparser.model.Security;
+import com.javajunior.stockdataparser.service.SecurityService;
+import com.javajunior.stockdataparser.to.SecurityTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

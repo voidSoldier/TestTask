@@ -6,7 +6,7 @@ function getAll() {
     $('#securityList').dataTable({
         pageLength: 16,
         ajax: {
-            url: '/testtask/securities',
+            url: '/stockdataparser/securities',
             dataSrc: ''
         },
         columns: [
@@ -100,7 +100,7 @@ function saveSecurity() {
 
     $.ajax({
         method: 'POST',
-        url: '/testtask/securities',
+        url: '/stockdataparser/securities',
         dataType: 'JSON',
         data: data,
 
@@ -120,7 +120,7 @@ function clearForm() {
 function updateSec(id) {
 
     $.ajax({
-        url: '/testtask/securities/' + id,
+        url: '/stockdataparser/securities/' + id,
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -149,7 +149,7 @@ function updateSec(id) {
 function deleteSec(id) {
     if (confirm("Delete")) {
         $.ajax({
-            url: "/testtask/securities/" + id,
+            url: "/stockdataparser/securities/" + id,
             type: "DELETE"
         }).done(function () {
             destroyTable();

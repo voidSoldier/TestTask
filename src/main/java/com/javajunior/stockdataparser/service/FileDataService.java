@@ -1,9 +1,8 @@
-package com.javajunior.testtask.service;
+package com.javajunior.stockdataparser.service;
 
-import com.javajunior.testtask.SecParser;
-import com.javajunior.testtask.repository.HistoryRepository;
-import com.javajunior.testtask.repository.SecurityRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.javajunior.stockdataparser.SecParser;
+import com.javajunior.stockdataparser.repository.HistoryRepository;
+import com.javajunior.stockdataparser.repository.SecurityRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
