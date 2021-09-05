@@ -11,7 +11,7 @@
 <script type="text/javascript" src="resources/js/history.js" defer></script>
 <h2>History records</h2>
 <table id="historyList" class="display" style="width:100%"></table>
-<jsp:useBean id="hist" class="com.javajunior.testtask.model.History" scope="request"/>
+<jsp:useBean id="hist" class="com.javajunior.stockdataparser.model.History" scope="request"/>
 <br><br><br>
 <h3>Create new history</h3>
 <form method="post" action="${pageContext.request.contextPath}/histories">

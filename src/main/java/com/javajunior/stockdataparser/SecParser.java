@@ -1,7 +1,7 @@
-package com.javajunior.testtask;
+package com.javajunior.stockdataparser;
 
-import com.javajunior.testtask.model.History;
-import com.javajunior.testtask.model.Security;
+import com.javajunior.stockdataparser.model.History;
+import com.javajunior.stockdataparser.model.Security;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

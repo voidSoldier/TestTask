@@ -1,4 +1,4 @@
-package com.javajunior.testtask.model;
+package com.javajunior.stockdataparser.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

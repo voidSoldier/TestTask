@@ -1,4 +1,4 @@
-package com.javajunior.testtask;
+package com.javajunior.stockdataparser;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  */
 public class JacksonObjectMapper extends ObjectMapper {
 
-    private static final ObjectMapper MAPPER = new com.javajunior.testtask.JacksonObjectMapper();
+    private static final ObjectMapper MAPPER = new JacksonObjectMapper();
 
     private JacksonObjectMapper() {
         registerModule(new Hibernate5Module());

@@ -1,10 +1,10 @@
-package com.javajunior.testtask.service;
+package com.javajunior.stockdataparser.service;
 
-import com.javajunior.testtask.Util;
-import com.javajunior.testtask.model.History;
-import com.javajunior.testtask.model.Security;
-import com.javajunior.testtask.repository.HistoryRepository;
-import com.javajunior.testtask.repository.SecurityRepository;
+import com.javajunior.stockdataparser.Util;
+import com.javajunior.stockdataparser.model.History;
+import com.javajunior.stockdataparser.model.Security;
+import com.javajunior.stockdataparser.repository.HistoryRepository;
+import com.javajunior.stockdataparser.repository.SecurityRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

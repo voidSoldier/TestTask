@@ -6,8 +6,8 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="TestTask" value="56ebda5d-b24d-45e7-b38a-2b25e4e64aac" />
-          <factory-entry name="entityManagerFactory" value="eab7f819-09ab-4fe7-adf2-568a25c98536" />
+          <factory-entry name="StockDataParser" value="56ebda5d-b24d-45e7-b38a-2b25e4e64aac" />
+          <factory-entry name="entityManagerFactory" value="56ebda5d-b24d-45e7-b38a-2b25e4e64aac" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="entityManagerFactory" />
@@ -48,6 +48,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea/codeStyles" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/artifacts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,6 +1,6 @@
-package com.javajunior.testtask.web;
+package com.javajunior.stockdataparser.web;
 
-import com.javajunior.testtask.service.FileDataService;
+import com.javajunior.stockdataparser.service.FileDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

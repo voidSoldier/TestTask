@@ -1,7 +1,7 @@
-package com.javajunior.testtask.repository;
+package com.javajunior.stockdataparser.repository;
 
 
-import com.javajunior.testtask.model.Security;
+import com.javajunior.stockdataparser.model.Security;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
